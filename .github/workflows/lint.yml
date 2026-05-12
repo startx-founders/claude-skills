@@ -1,0 +1,145 @@
+name: lint
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  marketplace-schema:
+    name: Validate marketplace.json
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate required fields
+        run: |
+          python3 <<'PY'
+          import json, sys, pathlib, re
+          p = pathlib.Path(".claude-plugin/marketplace.json")
+          if not p.exists():
+              print("::error::.claude-plugin/marketplace.json is missing")
+              sys.exit(1)
+          try:
+              m = json.loads(p.read_text())
+          except json.JSONDecodeError as e:
+              print(f"::error::marketplace.json is not valid JSON: {e}")
+              sys.exit(1)
+          errors = []
+          if not isinstance(m.get("name"), str) or not re.fullmatch(r"[a-z0-9][a-z0-9-]*", m.get("name", "")):
+              errors.append("'name' must be a kebab-case string (a-z, 0-9, -)")
+          if not isinstance(m.get("owner"), dict) or not m["owner"].get("name"):
+              errors.append("'owner.name' is required")
+          if not isinstance(m.get("plugins"), list):
+              errors.append("'plugins' must be an array (use [] if empty)")
+          # Per-plugin checks
+          for i, plugin in enumerate(m.get("plugins", [])):
+              if not isinstance(plugin, dict):
+                  errors.append(f"plugins[{i}] must be an object"); continue
+              if not plugin.get("name"):
+                  errors.append(f"plugins[{i}].name is required")
+              if "source" not in plugin:
+                  errors.append(f"plugins[{i}].source is required")
+          # Reserved names guard (defense in depth)
+          reserved = {
+              "claude-code-marketplace", "claude-code-plugins",
+              "claude-plugins-official", "anthropic-marketplace",
+              "anthropic-plugins", "agent-skills",
+          }
+          if m.get("name") in reserved:
+              errors.append(f"'{m['name']}' is a name reserved by Anthropic")
+          if errors:
+              for e in errors:
+                  print(f"::error::{e}")
+              sys.exit(1)
+          print(f"marketplace.json OK — {len(m.get('plugins', []))} plugin(s) listed")
+          PY
+
+  typosquat-check:
+    name: Check for typosquat-like author dirs
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Detect new /skills/<dir>/ similar to existing
+        run: |
+          python3 <<'PY'
+          import os, sys, subprocess
+
+          def lev(a, b):
+              if len(a) < len(b): a, b = b, a
+              if not b: return len(a)
+              prev = list(range(len(b) + 1))
+              for i, ca in enumerate(a, 1):
+                  curr = [i]
+                  for j, cb in enumerate(b, 1):
+                      curr.append(min(curr[-1] + 1, prev[j] + 1, prev[j-1] + (ca != cb)))
+                  prev = curr
+              return prev[-1]
+
+          base = os.environ.get("GITHUB_BASE_REF", "main")
+          subprocess.run(["git", "fetch", "origin", base], check=True, capture_output=True)
+          diff = subprocess.run(
+              ["git", "diff", "--name-only", "--diff-filter=A", f"origin/{base}...HEAD"],
+              check=True, capture_output=True, text=True,
+          ).stdout.splitlines()
+          new_authors = set()
+          for path in diff:
+              parts = path.split("/")
+              if len(parts) >= 2 and parts[0] == "skills":
+                  new_authors.add(parts[1])
+          if not new_authors:
+              print("No new author directories in this PR.")
+              sys.exit(0)
+          # Existing author dirs (on base)
+          existing = []
+          if os.path.isdir("skills"):
+              existing = [d for d in os.listdir("skills")
+                          if os.path.isdir(os.path.join("skills", d)) and not d.startswith(".")]
+          flagged = False
+          for new in new_authors:
+              if new in existing:
+                  continue
+              for old in existing:
+                  d = lev(new.lower(), old.lower())
+                  if 0 < d <= 2:
+                      print(f"::warning::New dir 'skills/{new}/' is within Levenshtein {d} of existing 'skills/{old}/' — possible typosquat. Curators must explicitly confirm.")
+                      flagged = True
+          if not flagged:
+              print(f"New author dirs OK: {sorted(new_authors)}")
+          PY
+
+  cross-author-edit-guard:
+    name: Warn if PR touches multiple author dirs
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Flag PRs touching multiple authors
+        run: |
+          python3 <<'PY'
+          import os, subprocess
+          base = os.environ.get("GITHUB_BASE_REF", "main")
+          subprocess.run(["git", "fetch", "origin", base], check=True, capture_output=True)
+          diff = subprocess.run(
+              ["git", "diff", "--name-only", f"origin/{base}...HEAD"],
+              check=True, capture_output=True, text=True,
+          ).stdout.splitlines()
+          authors = set()
+          for path in diff:
+              parts = path.split("/")
+              if len(parts) >= 2 and parts[0] == "skills":
+                  authors.add(parts[1])
+          if len(authors) > 1:
+              print(f"::warning::This PR modifies multiple author directories: {sorted(authors)}. CODEOWNERS will require an approval from each affected author. Curators must verify this is intentional.")
+          else:
+              print(f"PR scope: {sorted(authors) or 'no author dirs touched'}")
+          PY

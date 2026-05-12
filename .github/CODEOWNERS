@@ -1,0 +1,31 @@
+# CODEOWNERS — who must approve a PR before it can merge.
+#
+# Rules (GitHub evaluates top-to-bottom; LAST matching pattern wins):
+#   - Default: everything requires curators review.
+#   - Per-author lines below override the default for that author's dir,
+#     so authors can self-merge changes inside their own /skills/<handle>/.
+#   - The marketplace catalog itself (.claude-plugin/, .github/) is always
+#     curators-only — authors cannot edit the catalog or CI directly.
+#
+# When a new contributor is onboarded, they add a line under
+# "# Per-author overrides" in their first PR. The curator reviewing the
+# first PR validates the handle matches the GitHub account opening the PR.
+
+# ---- Default: curators gate everything ----
+*                                   @startx-founders/curators
+
+# ---- Curator-only paths (cannot be overridden by author lines below) ----
+/.claude-plugin/                    @startx-founders/curators
+/.github/                           @startx-founders/curators
+/docs/                              @startx-founders/curators
+/LICENSE                            @startx-founders/curators
+/README.md                          @startx-founders/curators
+/CONTRIBUTING.md                    @startx-founders/curators
+/SECURITY.md                        @startx-founders/curators
+
+# ---- Per-author overrides ----
+# Add one line per contributor. Pattern:
+#   /skills/<github-handle>/    @<github-handle>
+#
+# Example (uncomment + replace when first author onboards):
+# /skills/mattpauker/                @mattpauker
