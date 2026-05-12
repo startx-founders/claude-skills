@@ -136,5 +136,5 @@ Should show: `startx-founders` marketplace with 0 plugins (until first PR lands)
 
 - Add a GitHub topic `claude-code-marketplace` to improve discoverability.
 - Submit the marketplace to https://clau.de/plugin-directory-submission if you want it listed in Anthropic's directory.
-- Wire up GitHub Discussions or a `#claude-skills` channel in the StartX Slack.
+- Wire up GitHub Discussions for catalog-level Q&A.
 - Once you have ≥3 active contributors, rotate a third curator in (Homebrew's pattern).

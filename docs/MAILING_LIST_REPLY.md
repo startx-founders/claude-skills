@@ -1,25 +1,32 @@
-# Draft reply to the StartX founder mailing list thread
+# Reply to the StartX founder mailing list thread
 
 Subject: keep the thread subject (`Re: [StartX AnythingG.] Building ads w/ Claude Design`).
 
 ---
 
-Happy to set this up. There's been a few people in this thread floating "let's make a private/internal StartX repo of trusted skills" — here's a concrete proposal, learning from how Homebrew and Anthropic's own plugin marketplace handle the same problem.
+Happy to set this up — and actually, just did. The repo is live:
 
-**Architecture:** a public GitHub org `startx-founders` (read by anyone, write by invited StartX members only), with a `claude-skills` repo containing a Claude Code `marketplace.json`. Each contributor gets their own `/skills/<your-github-handle>/` directory. CODEOWNERS routes that directory to you, so you can update your own skill without anyone else's permission — but you can't touch anyone else's, and outside contributors can't merge anything without a curator's approval.
+**https://github.com/startx-founders/claude-skills**
 
-**Verification — the "are you really StartX?" question:** post your GitHub handle in this thread (or in our Slack), a curator confirms you're a StartX founder, then invites your GitHub username to the org. No StartX-issued email needed — invites work by handle. This is the same out-of-band attestation pattern Homebrew uses ("loose verification through the community"), scaled down.
+Install in Claude Code:
 
-**Why a separate org, why not the existing `github.com/StartX`:** that org exists but has been dormant since 2018 with zero public repos. Unless someone in this thread has the keys to it, I'll spin up `github.com/startx-founders` this week. If you do have access to the old one, or if you'd rather we name it differently, **reply here**.
+```
+/plugin marketplace add startx-founders/claude-skills
+```
 
-**On trust:** we won't security-audit submitted skills. Same posture Anthropic takes with their own plugin directory. The "verified" part is "we know this person is a StartX founder," not "we read every line of code they shipped." Installing any plugin runs arbitrary code with your user privileges — treat it like a script a friend gave you on a USB drive.
+It returns 0 plugins right now, which is correct — catalog is empty until the first contributor PR lands.
 
-**Next steps if this looks right:**
+**The model, briefly.** Public repo (anyone reads), write gated to the `@startx-founders` GitHub org. Each contributor gets a `/skills/<github-handle>/` directory routed to them via CODEOWNERS — you control your own skill, you can't touch anyone else's. Branch protection on `main` requires a code-owner approval before anything merges. The "are you really StartX?" check is just "post your handle here and I'll invite you." Same out-of-band pattern Homebrew and Apache use.
 
-- Matt — happy to make `ivy-invest/claude-design-for-ads` the first listing if you're up for it. You wouldn't need to move your code; the catalog would just reference your repo at a pinned tag.
-- **Anyone who wants curator rights** (will help me review the first few PRs): reply with your GitHub handle. Aiming for 2–3 curators total at the start.
-- **Anyone who has an opinion on the name** (`startx-founders` vs alternatives): reply.
-- I'll have the scaffold up by end of week and a CONTRIBUTING.md walking through the 5-step onboarding flow.
+It's **curated, not audited** — same disclaimer Anthropic uses for their own plugin marketplace. Installing a skill runs arbitrary code with your user privileges; verifying that the contributor is a StartX founder is what we do, code review is on you.
+
+**A few asks while it's still empty:**
+
+- **Matt** — happy to make `ivy-invest/claude-design-for-ads` the first listing. Your repo would need a small Claude Code plugin manifest (`.claude-plugin/plugin.json` + a one-page SKILL.md teaching Claude Code when to use the toolkit) so `/plugin install` resolves. I can send you a draft of both — ~5 min for you to add and re-tag. OK to proceed?
+- **Curators wanted.** I'd like 2–3 people who'll help me review the first PRs. Reply with your GitHub handle.
+- **On the name:** I went with `startx-founders` because the existing `github.com/StartX` org has been dormant since 2018 with zero public repos. If anyone has the keys to the old one and wants to consolidate, holler.
+
+CONTRIBUTING.md walks through the 5-step onboarding. Code is at the URL above, no signup needed to read.
 
 Rob
 
@@ -27,7 +34,7 @@ Rob
 
 ## Notes (don't send — for Robert)
 
-- Quote the part of the thread you're replying to so context is clear.
-- If you have Kuanysh's exact phrasing handy, you could open with a one-liner: "+1 to Ivan's idea of a trusted repo — here's what I'd propose."
-- The "curator rights" recruitment line does double duty: bootstraps your reviewer pool AND surfaces who actually wants to be involved long-term.
-- After you send, save the email's permalink (Google Groups URL) — that's the durable record of "we asked the community, here's who replied" if you ever need to justify decisions.
+- Reply lands on the thread that has Matt, Danny, Ruth Ann, Ivan, Jonathan, Kenneth, Kuanysh — i.e. exactly the right audience already gathered.
+- The "Matt — your repo needs a manifest" framing is honest and gives him an easy yes/no: yes, I'll draft the manifest and send it.
+- The "Curators wanted" line does double duty: filters for who actually wants to be involved long-term.
+- After you send, save the email's permalink (Google Groups URL) — durable record of "we asked the community, here's who replied."

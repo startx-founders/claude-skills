@@ -29,13 +29,11 @@ This catalog is **curated, not audited**. StartX Founders curators perform a bas
 
 ## Listed skills
 
-The catalog starts empty — first contributor PR is pending.
-
 Once skills are listed, they will be auto-rendered here. For now, the source of truth is [`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json).
 
 ## Who can contribute
 
-Current and alumni StartX founders. Verification happens out-of-band: post your GitHub handle in the StartX founder mailing list (or our Slack), and a curator will invite you to the [`@startx-founders`](https://github.com/startx-founders) GitHub organization.
+Current and alumni StartX founders. Verification happens out-of-band: post your GitHub handle in the StartX founder mailing list, and a curator will invite you to the [`@startx-founders`](https://github.com/startx-founders) GitHub organization.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full flow.
 
@@ -43,7 +41,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the full flow.
 
 This catalog is community-organized. Curators (with merge rights) are listed in [`.github/CODEOWNERS`](.github/CODEOWNERS) under the `@startx-founders/curators` team.
 
-Started by [@robertnowell](https://github.com/robertnowell) (Kopi, StartX founder community). Curator additions made by existing curators after a contributor has shipped a few well-received PRs — same model Homebrew uses.
+Started by [@robertnowell](https://github.com/robertnowell) (Kopi, StartX '22).
 
 ## Reporting issues
 
