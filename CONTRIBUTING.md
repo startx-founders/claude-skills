@@ -31,7 +31,7 @@ Either is fine. New contributors tend to start with Option A (less friction) and
 
 ## First-time contributor flow (5 steps)
 
-1. **Verify membership.** Post your GitHub handle in the StartX founder mailing list (or our Slack/Discord — whichever channel is gated to StartX members):
+1. **Verify membership.** Post your GitHub handle in the StartX founder mailing list:
    > "I'm @your-github-handle, StartX [batch], adding a Claude Code skill called X."
 2. **Wait for org invite.** A curator confirms you're in the StartX channel and invites your GitHub username to the [`@startx-founders`](https://github.com/startx-founders) org. Accept it.
 3. **Open your first PR.** Make these changes in one PR:

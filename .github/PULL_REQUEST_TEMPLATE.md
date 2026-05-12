@@ -2,8 +2,8 @@
 Thanks for contributing to startx-founders/claude-skills!
 
 Before opening this PR, make sure you've done the verification step:
-1. Posted your GitHub handle in the StartX founder mailing list (or our
-   Slack/Discord) so a curator can confirm you're a StartX founder.
+1. Posted your GitHub handle in the StartX founder mailing list so a
+   curator can confirm you're a StartX founder.
 2. Been invited to the @startx-founders org and accepted.
 3. If this is your first contribution, you should be adding a new
    /skills/<your-github-handle>/ directory and a single line to
@@ -32,7 +32,7 @@ Before opening this PR, make sure you've done the verification step:
 
 ## Contributor checklist
 
-- [ ] I am a current or alumni StartX founder, verified via the StartX mailing list / Slack.
+- [ ] I am a current or alumni StartX founder, verified via the StartX mailing list.
 - [ ] I understand that my skill runs with the installing user's privileges and that StartX does not security-audit submitted code.
 - [ ] If external, my source repo is pinned to a tag or SHA (not a moving branch).
 - [ ] I've added a single line to `.github/CODEOWNERS` for my own dir (first-time contributors only).

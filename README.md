@@ -33,7 +33,7 @@ Once skills are listed, they will be auto-rendered here. For now, the source of 
 
 ## Who can contribute
 
-Current and alumni StartX founders. Verification happens out-of-band: post your GitHub handle in the StartX founder mailing list (or our Slack), and a curator will invite you to the [`@startx-founders`](https://github.com/startx-founders) GitHub organization.
+Current and alumni StartX founders. Verification happens out-of-band: post your GitHub handle in the StartX founder mailing list, and a curator will invite you to the [`@startx-founders`](https://github.com/startx-founders) GitHub organization.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full flow.
 
