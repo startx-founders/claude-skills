@@ -1,7 +1,6 @@
 {
   "name": "startx-founders",
   "description": "Claude Code skills and plugins built by StartX founders, for StartX founders. Community-curated, not Anthropic-verified.",
-  "version": "0.1.0",
   "owner": {
     "name": "StartX Founders Community"
   },
