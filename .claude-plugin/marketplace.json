@@ -41,6 +41,23 @@
       "license": "MIT",
       "category": "productivity",
       "tags": ["evals", "verification", "agents", "claude-skill"]
+    },
+    {
+      "name": "claude-secrets",
+      "description": "Paste a credential into a system popup, store it in macOS Keychain, then reference it by name from any command. The value never enters Claude's context window.",
+      "source": {
+        "source": "github",
+        "repo": "robertnowell/claude-secrets",
+        "ref": "v1.0.3"
+      },
+      "author": {
+        "name": "Robert Nowell",
+        "url": "https://github.com/robertnowell"
+      },
+      "homepage": "https://github.com/robertnowell/claude-secrets",
+      "license": "MIT",
+      "category": "security",
+      "tags": ["secrets", "credentials", "keychain", "ai-safety", "macos"]
     }
   ]
 }
