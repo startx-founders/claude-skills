@@ -58,6 +58,32 @@
       "license": "MIT",
       "category": "security",
       "tags": ["secrets", "credentials", "keychain", "ai-safety", "macos"]
+    },
+    {
+      "name": "startx-boa-prep",
+      "description": "Help a StartX founder prepare for a Board of Advisors meeting or CEO/advisor review. Walks six StartX forcing questions across the whole company, demands evidence per claim, and produces an advisor-ready pre-read with explicit open risks, consolidated asks, and a routing back into StartX's own support surfaces.",
+      "source": "./skills/1SF/startx-boa-prep",
+      "author": {
+        "name": "Adam McGinty",
+        "url": "https://github.com/1SF"
+      },
+      "homepage": "https://github.com/startx-founders/claude-skills/tree/main/skills/1SF/startx-boa-prep",
+      "license": "MIT",
+      "category": "productivity",
+      "tags": ["startx", "board-of-advisors", "founders", "mentor-prep", "claude-skill"]
+    },
+    {
+      "name": "startx-office-hours-prep",
+      "description": "Help a StartX founder prep for office hours, a mentor 1:1, or a Lead Mentor 1:1. Walks six StartX forcing questions, routes by session type, company stage, and BoA cycle phase, and produces a prep doc in the StartX BoA challenge format that can also seed a Board of Advisors pre-read.",
+      "source": "./skills/1SF/startx-office-hours-prep",
+      "author": {
+        "name": "Adam McGinty",
+        "url": "https://github.com/1SF"
+      },
+      "homepage": "https://github.com/startx-founders/claude-skills/tree/main/skills/1SF/startx-office-hours-prep",
+      "license": "MIT",
+      "category": "productivity",
+      "tags": ["startx", "office-hours", "founders", "mentor-prep", "claude-skill"]
     }
   ]
 }
