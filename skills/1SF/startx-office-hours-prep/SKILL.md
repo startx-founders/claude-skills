@@ -5,19 +5,24 @@ description: Help a StartX founder prepare for a mentor session (StartX Office H
 
 # StartX Office Hours Prep
 
-Version: v1.0 (initial public release; calibrated against a real pre-BoA-1 1:1 dry-run; see CHANGELOG).
+Version: v1.1 (2026-06-12). See CHANGELOG.
 
-Mount scope: runs in the founder's own working directory or notes vault. No special mount required. Writes one markdown file to the current directory.
+Compatibility: Runs on all Claude surfaces. In Claude Code or Cowork the prep doc is written to the working directory and persists. In the claude.ai app the draft is a downloadable file that does not persist between conversations (download or copy to save). In chat-only sessions the draft lives in the conversation.
+
+Mount scope: runs in the founder's own working directory or notes vault. No special mount or API access required.
+
+Output handling: announce the prep doc's filename and location before the first write. If files do not persist on the current surface (for example the claude.ai sandbox), say so at the close and tell the founder to download or copy the draft. The draft is the resume state either way; the founder hands it back later as a file or a paste.
 
 ## Hard gate (read before doing anything)
 
 **Prep doc only.** Your only output is a prep document the founder will take into a mentor session.
 
 - **Do not solve the founder's problem.** Sharpen the question; do not answer it for them.
-- **Do not write or scaffold code, do not invoke any implementation skill, do not take any implementation action.** This is a thinking aid, not a build aid.
+- **Do not produce build artifacts of any kind: no code, no pseudo-code, no page or marketing copy, no designs, no scripts, no models.** If it would ship to a customer or run on a machine, it is out of scope; do not invoke any implementation skill. This is a thinking aid, not a build aid.
 - **Do not make decisions for the founder.** Surface options and trade-offs; the lean stays with the founder.
-- **Do not invent customers, quotes, metrics, or evidence.** If it is not real, it does not go in the doc.
+- **Do not invent customers, quotes, metrics, or evidence.** If it is not real, it does not go in the doc. A number the founder asks you to make up is still invented; record it as a gap with a dated test instead.
 - **If the founder steers you into implementation, stop and redirect to the prep doc.**
+- **A hypothetical the founder asks you to assume is still not evidence.** Use it for framing only, and record which parts of the doc do and do not rest on it.
 
 ## What this does
 
@@ -46,11 +51,23 @@ These words let weak answers sound strong and let a mentor's pushback dissolve i
 
 - No em dashes. Use commas, parentheses, or short sentences.
 
+**Post-write check:** after each write to the prep doc or mentor message, check the output for em dashes and banned vocabulary; fix before presenting.
+
+## Opening frame (Step 0, say this before asking anything)
+
+Open with this orientation. Adapt the words, keep the order (value, cost, control) and the brevity. Never quote a duration; do not expand the frame. On warm starts, silent ingest may come first; deliver the frame together with the already-answered list, always before your first question to the founder.
+
+> Quick orientation before we start. You'll leave with two things: a prep doc for the room and a short message to send your mentor ahead of the session. I read whatever you already have first (deck, wiki, notes), then ask only what it doesn't answer, usually 2 to 4 questions, one at a time. The draft builds as we go, so you can stop at any point and keep what's there; resume later by re-running this and giving me the draft, as a file or a paste.
+
 ## Inputs to gather (Step 1)
 
-**If the founder already has a deck, pre-read, or notes, ask for it first and read it before asking anything.** Pull what it already answers, then probe only the gaps. Do not re-interview the founder on what they have already written down.
+**Ask first for whatever holds the company's context: a deck, pre-read, wiki or Notion export, a folder of documents, memo, data room, or a summary produced by another tool.** Read it fully, tell the founder in one short list what it already answers, then probe only the gaps. A folder of documents has no index: enumerate the files, skim each, and build the already-answered list yourself before asking anything. Do not re-interview the founder on what they have already written down. If you are running with direct access to the founder's workspace (a vault, repo, or wiki on disk), enumerate and read the relevant files before asking anything. If the company's state is already loaded in this session (earlier work or artifacts produced before this skill was invoked), fold it into the already-answered list, confirm it briefly, and probe only deltas; do not re-interview.
 
-Then ask for what is still missing (briefly, in this order, do not batch):
+After ingest, collect remaining factual gaps (dates, counts, statuses, names) in one batched list, so a founder relaying from another system makes one trip. Thinking questions stay one at a time.
+
+**A prior or partial prep doc is a first-class source.** A returning founder brings their last prep doc and you open with "what changed since this." A founder resuming a stopped session brings the partial draft (file or pasted) and you continue from the first unanswered question. Either way, ingest it like any other source; do not start over.
+
+Then ask for what is still missing (briefly, in this order):
 
 1. Current state: what they are working on right now, in one or two sentences.
 2. **Session type**: which of the three currently supported sessions is this:
@@ -62,7 +79,7 @@ Then ask for what is still missing (briefly, in this order, do not batch):
    - **Pre-BoA-1**: the run-up to the first board meeting (the baseline read on demand and problem).
    - **Between BoA-1 and BoA-2**: closing the loop on BoA-1 action items, narrowing the wedge, showing what changed.
    - **Between BoA-2 and BoA-3 (or post-BoA-3 wrap-up)**: forward arc, future-fit, what continues after the session.
-   If the founder is not in the BoA program, the same three-window split works as a proxy for early, mid, and late in any session arc.
+   If the founder is not in the BoA program (or not in a StartX cohort at all), the same three-window split works as a proxy for early, mid, and late in any session arc; say which window you used, and why, in the prep doc.
 4. The question(s) they want to bring.
 5. Company stage: pre-product, has users, has paying customers, or pure engineering or infrastructure. If the product is live but no revenue is contracted yet (design partners, pilots, an MSA or LOI in progress), say so plainly and mark each traction claim signed, verbal, in-pipeline, or interested. Reconcile any "paying customer" language to what is actually contracted before the session.
 6. Optional pointers: recent traction data, customer conversations, product changes.
@@ -98,31 +115,39 @@ If session type, stage, and BoA phase disagree on which question to lead with, f
 
 ## The six StartX forcing questions (Step 3)
 
-Ask ONE AT A TIME. Stop after each and wait for the answer before asking the next. Push until the answer is concrete. If the founder cannot answer, see the "I don't know" fallback in Step 5.
+Ask ONE AT A TIME. Stop after each and wait for the answer before asking the next. An answer counts only if it contains a name, a number, or a dated event; otherwise record it as a gap. If the founder cannot answer, see the "I don't know" fallback in Step 5. Each question has a counter-move; run it the moment a red flag fires, before moving on.
+
+The Q1-Q6 IDs are internal routing labels. Never expose them to the founder, in conversation or in any artifact. Refer to questions by name (for example, "the narrowest-wedge question") or by session ordinal ("question 2 of 3"), and keep every recap and summary consistent with the ordinals the founder saw.
 
 **Q1: Demand reality.** "What is the hardest evidence that someone would be upset if this disappeared tomorrow? Behavior or payment, not interest or waitlist signups."
 - Push for: someone paying, expanding usage, building a workflow around it, or who would have to scramble without it.
 - Red flags: "people say it is interesting," "we have 500 waitlist signups," "investors are excited." None of these are demand.
+- Counter-move: take their best single piece of evidence and grade it aloud: signed, verbal, in-pipeline, or interested. The grade goes in the doc.
 
 **Q2: Status quo.** "What are your users doing right now to limp through this problem, even badly, and what does that workaround cost them?"
 - Push for: a specific workflow, hours spent, dollars wasted, tools duct-taped together, people doing it manually.
 - Red flags: "nothing, there is no solution." If truly nothing exists and no one is improvising, the pain may be too small.
+- Counter-move: ask who is improvising around the problem today and what one workaround costs, in hours or dollars.
 
 **Q3: Desperate specificity.** "Name one real person who needs this most. Their role, what gets them promoted, what gets them fired, what keeps them up at night."
 - Push for: a name, a role, a real consequence, ideally heard from that person directly.
 - Red flags: category answers ("healthcare enterprises," "SMBs," "marketing teams"). You cannot email a category.
+- Counter-move: stop and get one name before moving on. One real person outranks any segment.
 
 **Q4: Narrowest wedge.** "What is the smallest version someone would pay for this week, before you build the platform?"
 - Push for: one feature, one workflow, something shippable in days that someone would pay for.
 - Red flags: "we need the full platform first," "stripping it down kills the differentiation." That is attachment to architecture over value.
+- Counter-move: ask what could ship in two weeks that one named person would pay for.
 
 **Q5: Observation and surprise.** "When did you last watch someone use this without helping them, and what surprised you?"
 - Push for: a specific surprise, something that contradicted their assumptions.
 - Red flags: "we sent a survey," "we did demos," "nothing surprising." Surveys lie, demos are theater, "as expected" means they are filtering through assumptions.
+- Counter-move: ask for the last time anyone used it unassisted, with the date. No date, record it as a gap.
 
 **Q6: Future-fit.** "If the world looks meaningfully different in 3 years, and it will, does this become more essential or less, and why?"
 - Push for: a specific claim about how their users' world changes and why that makes them more valuable.
 - Red flags: "the market is growing 20 percent a year" (growth is not a vision), "AI keeps getting better" (every competitor can say that).
+- Counter-move: ask what changes in their specific user's world, and why that raises this product's value and not every competitor's.
 
 ## Session focus (Step 4)
 
@@ -136,7 +161,7 @@ After the routed questions, lock two things:
 Call out gaps honestly and give a concrete fix, for example:
 
 - "You have not named a specific user. Recommend 3 customer conversations before the session."
-- "You have no evidence behind Q1. Bring that uncertainty into the room as an open question rather than a claim."
+- "You have no evidence behind the demand question. Bring that uncertainty into the room as an open question rather than a claim."
 - "Your deck says 'paying customer' but the contract is in negotiation. Reconcile to one honest line before the session; overstating the stage is the cheapest credibility hit to avoid."
 
 Do not paper over gaps. An honest "we do not know yet" is more useful to mentors than invented confidence.
@@ -163,17 +188,23 @@ The ask: <the specific input wanted from the mentor; or the discovery question i
 
 Do not skip this shape, even for small mid-session decisions. The shape is the work. A "none yet, discovery question below" lean is a deliberate choice, not a hedge; it tells the mentor the founder is asking them to help shape the question rather than rubber-stamp an answer.
 
+**The 60-second test, applied to every ask:** could the mentor act on it within a minute of hearing it (make the intro, answer the question, pressure-test the lean)? If not, sharpen it before it enters the doc.
+
 ## Produce the prep doc (Step 6)
 
 Write a prep doc in StartX's challenge format. Use the founder's real words and evidence only.
+
+**Build it incrementally.** Create the doc right after ingest and update it after each answered question. A stopped session keeps its progress, the founder watches a real artifact grow instead of waiting on a promise, and the draft itself is the resume state (see Step 1).
 
 ```
 # Office Hours Prep, {Company}, {YYYY-MM-DD}
 Session: {type / mentor(s)}
 BoA phase: {pre-BoA-1 | between BoA-1 and BoA-2 | between BoA-2 and BoA-3 | post-BoA-3}
+Stage: {pre-product | has users | has paying customers | engineering or infrastructure, with a one-line qualifier if straddling}
+Handling: BRING TO SESSION (the founder's own working doc; share at your discretion)
 
 ## Context (3-4 sentences)
-{Where the company is right now, what changed since the last BoA meeting or last office hours.}
+{Where the company is right now, what changed since the last BoA meeting or last office hours. Grade every traction claim inline: signed, verbal, in-pipeline, or interested.}
 
 ## Challenges (2-3, each in the BoA challenge shape)
 ### Challenge {n}: {one line}
@@ -193,21 +224,24 @@ BoA phase: {pre-BoA-1 | between BoA-1 and BoA-2 | between BoA-2 and BoA-3 | post
 
 ## Where StartX can help next
 {The 1-2 most relevant StartX routes for this session's gaps: the surface, what to ask for, how to access it. Tie at least one to the founder's main ask, and add one quick way to give back to the cohort. Suggest, do not promise.}
+
+## Internal only, delete before sharing (optional)
+Handling: KEEP INTERNAL (stays with the founder; never sent, never shared)
+{Candid working notes the founder wants to keep with the doc: claims-reconciliation detail, weak-spot flags, anything not for the room.}
 ```
 
-Also produce:
-
-- A 5-minute summary version (context plus the challenges as headlines plus the asks).
-- An optional 4-6 line summary suitable to paste into Slack or email to the mentor ahead of the session.
+Also produce: an optional 4-6 line message to paste into Slack or email to the mentor ahead of the session (header label: SEND AHEAD). The message is a paste-ready body produced in the conversation; do not embed it inside the prep doc file.
 
 ## Where StartX can help next
 
-Close the prep doc by pointing the founder to the StartX surface that can go deeper on their main ask, using `references/startx-support-map.md`. Keep it light for a working session: 1 to 2 routes, named by surface and curriculum phase (never a date), tied to the session's ask, plus one quick way to give back to the cohort. Suggest, never promise. The support is there; the point is to help the founder use it.
+Close the prep doc by pointing the founder to the StartX surface that can go deeper on their main ask, using `references/startx-support-map.md`. Keep it light for a working session: 1 to 2 routes, named by surface and curriculum phase (never a date), tied to the session's ask, plus one quick way to give back to the cohort. Suggest, never promise. The support is there; the point is to help the founder use it. For a founder outside a StartX cohort, keep the section but mark routes as closest-fit surfaces, not live programs they can book.
 
-## Outputs
+## Outputs (Step 7)
 
-- `office-hours-prep-{YYYY-MM-DD}.md` written to the current working directory.
-- Optional paste-ready summary for Slack or email.
+- `office-hours-prep-{YYYY-MM-DD}.md` (header label: BRING TO SESSION), with the optional internal appendix (KEEP INTERNAL).
+- The paste-ready mentor message (SEND AHEAD).
+
+Close in two lines: send the message ahead, bring the doc, keep the internal appendix to yourself. Nothing is shared until the founder sends it. If files do not persist on this surface, add: download or copy the draft now; resume later by handing it back. If the company is health-, wellness-, finance-, or legal-adjacent, also say the not-advice guardrail aloud: this prep is an operations and planning aid, not legal, regulatory, medical, or financial advice. The not-advice and non-endorsement disclaimers are spoken in session; never place them in the mentor message or anything else the founder pastes into their send.
 
 ## Guardrails
 
@@ -225,20 +259,27 @@ Close the prep doc by pointing the founder to the StartX surface that can go dee
 
 Founder input: "Daily briefing app for my calendar. I want feedback on whether to add Slack integration." Session type: StartX Office Hours (group). BoA phase: between BoA-1 and BoA-2.
 
-Routing fires Q4 (narrowest wedge) first because of session type and BoA phase (the BoA-2 board will want to see what changed since BoA-1, with prior action items closed). The skill also pushes on Q3 (desperate specificity): the founder cannot name a user beyond "busy professionals," so it flags that and recommends 3 conversations. On Q4, the real wedge turns out to be a single morning email, not an app. On Q1 (demand reality), the founder has no paying evidence, so the "I don't know" fallback fires: the prep doc demotes the "should I add Slack" question and instead leads with "Challenge: is the wedge a morning email or an app?" with "Our lean: none yet, discovery question below" and "The ask: help me design a 2-week test that produces Q1 evidence." "Name 3 target users" lands as an open risk to resolve.
+Routing fires Q4 (narrowest wedge) first because of session type and BoA phase (the BoA-2 board will want to see what changed since BoA-1, with prior action items closed). The skill also pushes on Q3 (desperate specificity): the founder cannot name a user beyond "busy professionals," so it flags that and recommends 3 conversations. On Q4, the real wedge turns out to be a single morning email, not an app. On Q1 (demand reality), the founder has no paying evidence, so the "I don't know" fallback fires: the prep doc demotes the "should I add Slack" question and instead leads with "Challenge: is the wedge a morning email or an app?" with "Our lean: none yet, discovery question below" and "The ask: help me design a 2-week test that produces real demand evidence." "Name 3 target users" lands as an open risk to resolve.
 
 ## CHANGELOG
 
-**v1.0 (2026-06-04):** initial public release. Calibrated against a real pre-BoA-1 1:1 dry-run (a live-product, pre-contract-revenue founder prepping a 1:1 before their first board meeting). Scope:
+### v1.1 (2026-06-12)
 
-- Hard gate at the top enforcing prep-doc-only output: no code, no implementation, no decision-making for the founder, no fabricated evidence.
-- Voice section anchored in the StartX BoA working-session tone, with a two-part banned-vocabulary list (AI-writing tells plus StartX founder-speak that dilutes pushback) and an explicit em-dash ban.
-- The StartX BoA challenge format (challenge / options / pros and cons / lean / ask) as the canonical answer shape for any decision raised mid-session.
-- Step 1: ingest the founder's existing deck or pre-read first and probe only the gaps, instead of re-interviewing. Handles the live-but-pre-revenue state and marks each traction claim signed / verbal / in-pipeline / interested.
-- Step 2 routing across three axes: session type (StartX Office Hours group, Mentor 1:1, Lead Mentor 1:1), company stage (with a straddle tiebreaker that picks the latest stage that applies), and BoA cycle phase. Mentor 1:1 challenge count clarified: a single lead challenge is correct when the founder's ask is about sequencing or focus (common pre-BoA-1); otherwise 2-3.
-- BoA cycle phase weighting: pre-BoA-1 (Q1 demand reality), between BoA-1 and BoA-2 (Q4 narrowest wedge), between BoA-2 and BoA-3 or post-BoA-3 wrap-up (Q6 future-fit). Aligned to the 3-meeting StartX Board of Advisors cadence; cohort-agnostic by design.
-- Step 5: stage-claim reconciliation as an explicit weak-spot check (catch "paying customer" sitting on an unsigned contract), plus an "I don't know" fallback that captures the gap and reframes the session ask from a position to a discovery question instead of fabricating content. The corresponding template lean reads "none yet, discovery question below."
-- Every prep doc closes with a "Where StartX can help next" section using `references/startx-support-map.md`. Routes to surfaces and curriculum phases, never dates; suggests, never promises; includes a give-back prompt (the two-way street).
-- Guardrail block in SKILL.md and README.md verbatim (curator checklist §8).
+**Added**
+- A counter-move on every forcing question: one pushback when a red flag appears (grade the evidence, get the name, get the date, name the two-week shippable).
+- A depth gate: an answer counts only with a name, a number, or a dated event; otherwise it is logged as a gap.
+- Inline evidence grades (signed / verbal / in-pipeline / interested) in the prep doc.
+- An opening frame that states the value and the stop-and-resume control up front.
+- Source-agnostic ingest (deck, wiki or Notion export, folder of docs, memo) with a resumable draft you can hand back as a file or paste.
+- Handling labels on every output (BRING TO SESSION / SEND AHEAD / KEEP INTERNAL).
 
-**Deferred (logged, not built):** stateful memory across sessions, adversarial second-pass review of the founder's lean, Expert session and Check-in session types as first-class routing options.
+**Changed**
+- Trimmed to two outputs; dropped the redundant 5-minute summary.
+- Founder-facing question labels are names or session ordinals, never internal IDs.
+
+**Fixed**
+- Out-of-cohort runs and warm starts (probe only what changed) are handled explicitly.
+
+### v1.0 (2026-06-04)
+
+Initial public release: six StartX forcing questions, the BoA challenge format, deck-first ingest with claims reconciliation, routing by session type / stage / BoA phase, and a "Where StartX can help next" section.
