@@ -1,17 +1,11 @@
 ---
-type: reference
-status: draft
-created: 2026-06-03
-project: startx
-subproject: community-skills
-visibility: default
-subtitle: Cohort-agnostic map of StartX support surfaces, for skills to route follow-ons
-tags: [type/reference, status/draft, org/startx, domain/skills, domain/collab]
+title: StartX Support Map
+description: Cohort-agnostic map of StartX support surfaces, used by the StartX prep skills to route follow-ons.
 ---
 
 # StartX Support Map
 
-**Status: v0.1 draft.** A shared reference the StartX skills draw on to answer one question at the end of every prep or debrief: "given this gap, where in StartX can the founder get help next?" Built from the P26 onboarding webinar. At build time this map gets vendored into each skill's `references/` folder so each skill stays self-contained.
+A shared reference the StartX skills draw on to answer one question at the end of every prep or debrief: "given this gap, where in StartX can the founder get help next?" Built from StartX onboarding materials. It gets vendored into each skill's `references/` folder so each skill stays self-contained.
 
 **Cohort-agnostic by design.** This map names support surfaces, mentor relationships, curriculum phases, and how to access them. It never hardcodes dates or cohort labels, because those shift every session. A skill points a founder to "the Pricing Office Hours in the Sales sprint," not to a calendar date. The founder finds the live date on Luma, the dashboard, or the workshop lineup.
 
