@@ -5,9 +5,24 @@ description: Help a StartX founder prepare for a Board of Advisors meeting, a CE
 
 # StartX BoA Prep
 
-Version: v1.0 (initial public release; calibrated against a real BoA #1 dry-run; see CHANGELOG).
+Version: v1.1 (2026-06-12; companion to `startx-office-hours-prep`). See CHANGELOG.
 
-Mount scope: runs in the founder's own working directory or notes vault. No special mount required. Writes one markdown file to the current directory.
+Compatibility: Runs on all Claude surfaces. In Claude Code or Cowork the pre-read is written to the working directory and persists. In the claude.ai app the draft is a downloadable file that does not persist between conversations (download or copy to save). In chat-only sessions the draft lives in the conversation.
+
+Mount scope: runs in the founder's own working directory or notes vault. No special mount or API access required.
+
+Output handling: announce the pre-read's filename and location before the first write. If files do not persist on the current surface (for example the claude.ai sandbox), say so at the close and tell the founder to download or copy the draft. The draft is the resume state either way; the founder hands it back later as a file or a paste.
+
+## Hard gate (read before doing anything)
+
+**Pre-read only.** Your only output is the pre-read package the founder will send ahead and bring into their review.
+
+- **Do not solve the founder's problem.** Sharpen the question; do not answer it for them.
+- **Do not produce build artifacts of any kind: no code, no pseudo-code, no page or marketing copy, no designs, no scripts, no models.** If it would ship to a customer or run on a machine, it is out of scope; do not invoke any implementation skill. This is a thinking aid, not a build aid.
+- **Do not make decisions for the founder.** Surface options and trade-offs; the lean stays with the founder.
+- **Do not invent customers, quotes, metrics, traction, or evidence.** If it is not real, it does not go in the pre-read. A number the founder asks you to make up is still invented; record it as a gap with a dated test instead.
+- **If the founder steers you into implementation, stop and redirect to the pre-read.**
+- **A hypothetical the founder asks you to assume is still not evidence.** Use it for framing only, and record which parts of the pre-read do and do not rest on it.
 
 ## What this does
 
@@ -23,9 +38,19 @@ This is the higher-stakes companion to `startx-office-hours-prep`. Office hours 
 - **One question at a time.** Push on each answer until it is specific and uncomfortable. Comfortable usually means not deep enough.
 - **Candid and constructive, never harsh.** StartX founders describe a great board as giving "candid feedback, in a constructive and supportive manner." Be hard on the work and supportive of the person. Make "here is what is not working" and "I don't know yet" feel like the right answer in a safe space for founders helping founders, not a failure.
 
+## Opening frame (Step 0, say this before asking anything)
+
+Open with this orientation. Adapt the words, keep the order (value, cost, control) and the brevity. Never quote a duration; do not expand the frame. On warm starts, silent ingest may come first; deliver the frame together with the already-answered list, always before your first question to the founder.
+
+> Quick orientation before we start. You'll leave with an advisor-ready pre-read (including the 5-minute summary your board reads first) and a cover note, both meant to go out 48 hours ahead; your candid working notes stay with you. I read your existing materials first and ask only what they don't answer; a first review covers all six questions across the company, follow-ups cover fewer. The draft builds as we go, so you can stop at any point and keep what's there; resume later by re-running this and giving me the draft, as a file or a paste. One thing to know going in: honesty about open risks beats a polished story. That's what makes the board useful.
+
 ## Inputs to gather (Step 1)
 
-**If the founder already has a deck, pitch, or pre-read, ask for it first and read it before asking anything.** Most BoA founders arrive with a deck. Ingest it, extract what it already answers (problem, traction, the headline numbers, the challenges), and then probe only the gaps and soft spots instead of re-asking what the deck already covers. The skill's value is sharpening a draft, not interviewing from scratch.
+**Ask first for whatever holds the company's context: a deck, pitch, pre-read, wiki or Notion export, a folder of documents, memo, data room, or a summary produced by another tool.** Most BoA founders arrive with a deck, but not all; take the context in whatever shape it exists. A folder of documents has no index: enumerate the files, skim each, and build the already-answered list yourself before asking anything. Read it fully, tell the founder in one short list what it already answers (problem, traction, the headline numbers, the challenges), then probe only the gaps and soft spots. The skill's value is sharpening a draft, not interviewing from scratch. If you are running with direct access to the founder's workspace (a vault, repo, or wiki on disk), enumerate and read the relevant files before asking anything. If the company's state is already loaded in this session (earlier work or artifacts produced before this skill was invoked), fold it into the already-answered list, confirm it briefly, and probe only deltas; do not re-interview.
+
+After ingest, collect remaining factual gaps (dates, counts, statuses, names) in one batched list, so a founder relaying from another system makes one trip. Thinking questions stay one at a time.
+
+**A prior or partial pre-read is a first-class source.** A founder prepping their second or third review brings the last pre-read and you open with "what changed since this," anchored to the prior action items. A founder resuming a stopped session brings the partial draft (file or pasted) and you continue from the first unanswered question. Either way, ingest it; do not start over.
 
 Then ask for what is still missing (briefly):
 
@@ -36,6 +61,8 @@ Then ask for what is still missing (briefly):
 - Latest state: metrics, traction, and what changed since the last review.
 - The 2-3 strategic challenges the founder wants the board to weigh in on.
 - Optional: notes or action items from the prior review (for continuity).
+
+**Off-label room rail:** if ingest makes it obvious the room is not a StartX Board of Advisors (an internal partner group, an investor board, a non-cohort review), say so, continue with the same discipline, and move the "Where StartX can help next" section into the internal appendix. Do not add an audience question to the intake; a StartX BoA is external advisors by definition.
 
 ## Stage routing (Step 2)
 
@@ -52,31 +79,39 @@ Skip any question already answered well in Step 1 or the founder's deck, and alw
 
 ## The six StartX forcing questions (Step 3)
 
-Ask ONE AT A TIME. Stop after each and wait for the answer before the next. Push until concrete and evidence-backed.
+Ask ONE AT A TIME. Stop after each and wait for the answer before the next. An answer counts only if it contains a name, a number, or a dated event; otherwise record it as a gap. Each question has a counter-move; run it the moment a red flag fires, before moving on.
+
+The Q1-Q6 IDs are internal routing labels. Never expose them to the founder, in conversation or in any artifact. Refer to questions by name (for example, "the critical-assumption question") or by session ordinal ("question 3 of 6"), and keep every recap and summary consistent with the ordinals the founder saw.
 
 **Q1: Demand reality.** "Name the specific buyer or user who would be upset if this disappeared tomorrow. What is the hardest evidence of that, behavior or payment, not interest?"
 - Push for: a named person or account paying, expanding usage, or building a workflow around it.
 - Red flags: "the market is huge," waitlist counts, investor enthusiasm. None of these are demand.
+- Counter-move: take their best single piece of evidence and grade it aloud: signed, verbal, in-pipeline, or interested. The grade goes in the pre-read.
 
 **Q2: Current behavior.** "What are users doing right now to solve this, even badly, and what does that workaround cost them?"
 - Push for: a real workflow, hours, dollars, tools duct-taped together.
 - Red flags: "nothing exists." If no one is improvising, the pain may be too small.
+- Counter-move: ask who is improvising around the problem today and what one workaround costs, in hours or dollars.
 
 **Q3: Customer evidence.** "Walk me through your five most recent customer conversations. What did they actually say, in their words?"
 - Push for: specifics from real conversations, including the ones that went badly.
 - Red flags: "we sent a survey," "everyone loves it," no recent conversations. Surveys lie; "everyone" means no one specific.
+- Counter-move: ask for the most recent conversation that went badly and what was said, near-verbatim. The bad ones carry the evidence.
 
 **Q4: Durable advantage.** "If a well-funded competitor fast-followed you in three months, why would you still win?"
 - Push for: a real moat (distribution, data, switching costs, a hard-won insight), not effort or being first.
 - Red flags: "we move faster," "we care more," "first-mover advantage." These do not survive a fast-follow.
+- Counter-move: ask what a funded fast-follower could not copy in 90 days, and why.
 
 **Q5: Critical assumption.** "What is the single belief that, if it turns out to be wrong, kills the company? How would you know before it is too late?"
 - Push for: one load-bearing assumption and a concrete test or signal that would falsify it.
 - Red flags: "nothing, we're confident," or a list of ten small risks. Confidence without a test is the risk.
+- Counter-move: ask for the test or signal that would falsify the assumption before the next review, with a date.
 
 **Q6: The ask.** "What do you specifically need from this room, advice, an intro, a decision, a gut check? Be precise per challenge."
 - Push for: a concrete, answerable ask tied to each challenge.
 - Red flags: "general feedback," "just want to update them." That wastes the board.
+- Counter-move: apply the 60-second test: could an advisor act on the ask within a minute of hearing it (make the intro, answer the question, pressure-test the lean)? If not, sharpen it before it enters the pre-read.
 
 ## Assemble the challenges (Step 4)
 
@@ -85,8 +120,8 @@ With the founder, lock 2-3 strategic challenges to lead the meeting on (StartX e
 ## Flag weak spots (Step 5)
 
 Call out gaps honestly with a concrete fix, for example:
-- "Q3 has no recent customer evidence. Do three conversations before the meeting, or bring this in as an open question, not a claim."
-- "Q4 is effort, not a moat. Either name the durable advantage or list it as an open risk for the board."
+- "Your customer-evidence section has no recent conversations behind it. Do three before the meeting, or bring this in as an open question, not a claim."
+- "Your durable-advantage answer is effort, not a moat. Either name the durable advantage or list it as an open risk for the board."
 - **Stage-claim reconciliation:** "Your deck says 'first paying customer' but the contract is in negotiation. Reconcile that to one honest line ('live product, design partner converting to paid') before the board, and before investors. Overstating the stage is the cheapest credibility hit to avoid."
 - **Demand concentration:** "Most of your evidence is one account. Name the second and third buyer, or bring the concentration to the room as an open risk, not a hidden one."
 
@@ -96,15 +131,20 @@ Do not paper over gaps. An honest "we don't know yet" gives advisors something t
 
 Write a pre-read in the shape below. Use the founder's real words, numbers, and evidence only.
 
+**Build it incrementally.** Create the doc right after ingest and update it after each answered question. A stopped session keeps its progress, and the draft itself is the resume state (see Step 1).
+
+**Post-write check:** after each write to the pre-read or cover note, check the output for em dashes (use commas, parentheses, or short sentences instead) and generic AI-prose filler; fix before presenting. The pre-read should sound like the founder briefing their board, not a consultant's report.
+
 ```
 # BoA Pre-Read, {Company}, {YYYY-MM-DD}
 Review: {BoA meeting / CEO review / advisor 1:1} | Stage: {stage}
+Handling: SEND AHEAD (advisor pre-read; send 48 hours before the meeting)
 
 ## One-page summary
 {What the company is, where it is now, what changed since last review, the headline number(s).}
 
-## State of the business (evidence per claim)
-- Demand: {named buyer/user + hardest evidence, or marked assumption}
+## State of the business (evidence per claim; grade every traction claim inline: signed / verbal / in-pipeline / interested)
+- Demand: {named buyer/user + hardest evidence with its grade, or marked assumption}
 - Current behavior / status quo: {workaround + cost}
 - Customer evidence: {what the last 5 conversations actually said}
 - Durable advantage: {the moat, or marked as open}
@@ -128,10 +168,14 @@ Review: {BoA meeting / CEO review / advisor 1:1} | Stage: {stage}
 
 ## 5-minute summary
 {The skimmable version: headline state in 2-3 lines, the 2-3 challenges as one-line headlines, and the consolidated asks. This section is required, not optional; a busy advisor reads it first.}
+
+## Internal only, delete before sending (optional)
+Handling: KEEP INTERNAL (stays with the founder; must not survive into the sent pre-read)
+{Candid working notes the founder wants to keep with the draft: claims-reconciliation detail, weak-spot flags, anything not for advisors. See the send-safety pass in Step 8.}
 ```
 
 Also produce:
-- An optional 4-6 line cover note to send advisors with the pre-read, 48 hours ahead.
+- An optional 4-6 line cover note to send advisors with the pre-read, 48 hours ahead. The cover note is a message body, not document content: place it inside the KEEP INTERNAL appendix with the instruction "paste into your send, then delete this appendix," so it cannot survive loose in the sent file.
 
 ## Where StartX can help next (Step 7)
 
@@ -142,10 +186,14 @@ Close every pre-read by routing the founder back into StartX's own support, usin
 - Always include one connection to ask the board for (connecting founders to relevant people is what a BoA does best) and one way to give back to the cohort (Founder Spotlight, helping a Neighborhood peer). The community is a two-way street.
 - Suggest, never promise. Say "ask your board to connect you," not "your board will connect you." No guaranteed outcomes, intros, or dates.
 
-## Outputs
+## Outputs (Step 8)
 
-- `boa-prep-{YYYY-MM-DD}.md` written to the current working directory.
-- Optional paste-ready cover note for advisors.
+- `boa-prep-{YYYY-MM-DD}.md` (header label: SEND AHEAD, 48 hours before the meeting), with the optional internal appendix (KEEP INTERNAL, delete before sending).
+- The paste-ready cover note for advisors, carried inside the KEEP INTERNAL appendix: paste into the send, then delete the appendix.
+
+**Send-safety pass (required before the founder sends):** internal appendix deleted, every traction claim graded (signed / verbal / in-pipeline / interested), open risks in board-facing language. This doc goes to several advisors; a mistake here leaks further than in office-hours prep.
+
+Close in two lines: send the pre-read and cover note 48 hours ahead, delete the internal appendix first (paste the cover note out of it before deleting). Nothing is sent until the founder sends it. If files do not persist on this surface, add: download or copy the draft now; resume later by handing it back. If the company is health-, wellness-, finance-, or legal-adjacent, also say the not-advice guardrail aloud: this prep is an operations and planning aid, not legal, regulatory, medical, or financial advice. The not-advice and non-endorsement disclaimers are spoken in session; never place them in the cover note or anything else the founder pastes into their send.
 
 ## Guardrails
 
@@ -168,17 +216,22 @@ The skill pushes on Q1 (demand reality): of 12 pilots, only 2 are paying and exp
 
 ## CHANGELOG
 
-**v1.0 (2026-06-04):** initial public release. Calibrated against a real BoA #1 dry-run (a live-product, pre-contract-revenue founder prepping a first board meeting). Scope:
+### v1.1 (2026-06-12)
 
-- Six StartX forcing questions (demand reality, current behavior, customer evidence, durable advantage, critical assumption, the ask) run across the whole company, one at a time, evidence-backed.
-- Step 1: ingest the founder's existing deck or pre-read first and probe only the gaps, instead of interviewing from scratch. Most BoA founders arrive with a deck.
-- Step 1: claims-reconciliation prompt that marks each traction claim signed / verbal / in-pipeline / interested. The dry-run's single highest-value catch was a "first paying customer" claim sitting on an unsigned MSA.
-- Step 2 stage routing with a straddle tiebreaker and explicit handling of the live-but-pre-revenue state (route as "has users" plus a forced Q1 on contract status), mirroring `startx-office-hours-prep`.
-- Step 4: lock 2-3 strategic challenges in the StartX BoA challenge format (challenge / options / pros and cons / lean / ask), including at least one connection or intro to request from the board.
-- Step 5: stage-claim reconciliation and demand-concentration as explicit weak-spot checks; no papering over gaps.
-- Step 6: canonical pre-read template with the 5-minute summary as a required section (a busy advisor reads it first).
-- Step 7: a "Where StartX can help next" section using `references/startx-support-map.md`. Routes to surfaces and curriculum phases, never dates; suggests, never promises; always includes one connection to ask the board for and one way to give back.
-- Routes by BoA review ordinal (#1, #2, #3), never by date, so the skill stays cohort-agnostic across sessions.
-- Guardrail block in SKILL.md and README.md verbatim (curator checklist §8).
+**Added**
+- A counter-move on every forcing question: one pushback when a red flag appears (grade the evidence, cost the workaround, get the bad conversation verbatim, name what a fast-follower cannot copy in 90 days, date the falsifying test).
+- A depth gate: an answer counts only with a name, a number, or a dated event; otherwise it is logged as a gap.
+- Inline evidence grades (signed / verbal / in-pipeline / interested) in the pre-read.
+- An opening frame, source-agnostic ingest, and a resumable draft you can hand back as a file or paste.
+- A required send-safety pass before the pre-read goes to advisors.
+- A hard-gate block at the top (pre-read only).
 
-**Deferred (logged, not built):** route each board ask to the named advisor most likely to help (needs the founder's advisor roster); design-partner vs sales-motion nuance in Q3; automatic ingest of prior review notes for cross-review continuity (lands with `startx-boa-debrief`).
+**Changed**
+- Founder-facing question labels are names or session ordinals, never internal IDs.
+
+**Fixed**
+- Warm starts probe only what changed.
+
+### v1.0 (2026-06-04)
+
+Initial public release: six StartX forcing questions across the whole company, deck-first ingest with claims reconciliation, stage routing, the BoA challenge format, a required 5-minute summary, and a "Where StartX can help next" section.
