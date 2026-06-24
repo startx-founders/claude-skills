@@ -23,7 +23,12 @@
       "homepage": "https://github.com/robertnowell/deep-research",
       "license": "MIT",
       "category": "productivity",
-      "tags": ["research", "sources", "citations", "claude-skill"]
+      "tags": [
+        "research",
+        "sources",
+        "citations",
+        "claude-skill"
+      ]
     },
     {
       "name": "eval-first",
@@ -40,7 +45,12 @@
       "homepage": "https://github.com/robertnowell/eval-first",
       "license": "MIT",
       "category": "productivity",
-      "tags": ["evals", "verification", "agents", "claude-skill"]
+      "tags": [
+        "evals",
+        "verification",
+        "agents",
+        "claude-skill"
+      ]
     },
     {
       "name": "claude-secrets",
@@ -57,7 +67,13 @@
       "homepage": "https://github.com/robertnowell/claude-secrets",
       "license": "MIT",
       "category": "security",
-      "tags": ["secrets", "credentials", "keychain", "ai-safety", "macos"]
+      "tags": [
+        "secrets",
+        "credentials",
+        "keychain",
+        "ai-safety",
+        "macos"
+      ]
     },
     {
       "name": "startx-boa-prep",
@@ -70,7 +86,13 @@
       "homepage": "https://github.com/startx-founders/claude-skills/tree/main/skills/1SF/startx-boa-prep",
       "license": "MIT",
       "category": "productivity",
-      "tags": ["startx", "board-of-advisors", "founders", "mentor-prep", "claude-skill"]
+      "tags": [
+        "startx",
+        "board-of-advisors",
+        "founders",
+        "mentor-prep",
+        "claude-skill"
+      ]
     },
     {
       "name": "startx-office-hours-prep",
@@ -83,7 +105,32 @@
       "homepage": "https://github.com/startx-founders/claude-skills/tree/main/skills/1SF/startx-office-hours-prep",
       "license": "MIT",
       "category": "productivity",
-      "tags": ["startx", "office-hours", "founders", "mentor-prep", "claude-skill"]
+      "tags": [
+        "startx",
+        "office-hours",
+        "founders",
+        "mentor-prep",
+        "claude-skill"
+      ]
+    },
+    {
+      "name": "startx-boa-debrief",
+      "description": "Help a StartX founder debrief a Board of Advisors meeting (or mentor session): think through the board's input and build a follow-up outline (you write the email), with a confirmation gate so nothing unconfirmed carries through, plus a handoff that seeds the next pre-read.",
+      "source": "./skills/1SF/startx-boa-debrief",
+      "author": {
+        "name": "Adam McGinty",
+        "url": "https://github.com/1SF"
+      },
+      "homepage": "https://github.com/startx-founders/claude-skills/tree/main/skills/1SF/startx-boa-debrief",
+      "license": "MIT",
+      "category": "productivity",
+      "tags": [
+        "startx",
+        "board-of-advisors",
+        "debrief",
+        "founders",
+        "claude-skill"
+      ]
     }
   ]
 }
