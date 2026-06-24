@@ -25,8 +25,8 @@ StartX is a deep support network, and the most-repeated founder advice is that t
 
 ### Strategic or board-level challenge
 - **Board of Advisors** (BoA #1, #2, #3 across the session). Four advisors, StartX sources three and the founder sources the fourth. Bring 2 to 3 challenges in the challenge format. Ask the board to connect you to relevant people; StartX founders report advisors "went out of their way to provide inputs and connect us to relevant folks."
-- **Source your fourth advisor deliberately**: a potential customer, a domain expert, or a current advisor who fills a gap the other three do not.
-- Access: opt in and rank at matching.startx.com by the registration deadline.
+- **Source your fourth advisor deliberately**: a potential customer, a domain expert, or a current advisor who fills a gap the other three do not. Share the StartX one-pager for context when you recruit them, and frame the seat as a two-way win: the advisor joins the StartX community, which includes events like Community Dinners and VIP Night that mentors and advisors attend. Confirm the current perks and the exact advisor-onboarding step with your program manager.
+- Access: opt in and rank mentors at matching.startx.com by the registration deadline. Manage your own network and connections, and onboard a sourced advisor, through StartX Founder Tools at profiles.startx.com (a different surface from the matching platform).
 
 ### Personal clarity, accountability, team dynamics
 - **Lead Mentor** (1:1, every 1 to 2 weeks, not industry-specific). For connecting the dots, hard questions, accountability, and team or personal issues. Founders report a Lead Mentor's "ability to ask thoughtful questions" sharpened their strategic clarity.
@@ -62,7 +62,7 @@ Route to **Experts** (StartX-scheduled office hours plus direct 1:1 requests) an
 - Access and contacts: programs@startx.com for program questions; the founder dashboard and the weekly "This week at StartX" Monday email for what is live now.
 
 ### Give back (the two-way street)
-- **Founder Spotlight**: showcase your own expertise to the cohort through office hours, a roundtable, or a short talk. Builds credibility and helps your peers.
+- **Founder Spotlight**: share your own expertise with the cohort through office hours, a roundtable, or a short talk. Builds credibility and helps your peers.
 - **Help a Neighborhood peer**, offer an intro, or add a perk. StartX founders are explicit that the community is a two-way street: offer the same help you ask for.
 
 ## Posture reminders for the skill (founder voice)

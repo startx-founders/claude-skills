@@ -1,11 +1,11 @@
 ---
 name: startx-office-hours-prep
-description: Help a StartX founder prepare for a mentor session (StartX Office Hours, a mentor 1:1, or a Lead Mentor 1:1). Use when a founder says they have office hours or a mentor session coming up and wants to prep, sharpen their ask, or "get ready." Walks six StartX forcing questions one at a time, routes by session type, company stage, and BoA cycle (pre-BoA-1, between BoA-1 and BoA-2, between BoA-2 and BoA-3 or post-program wrap-up), flags weak spots, and produces an office-hours prep doc in the StartX BoA challenge format (challenge, options, pros and cons, lean, ask) that can also seed a Board of Advisors pre-read. Sharpens the founder's thinking; it does not replace it or invent evidence.
+description: Help a StartX founder prepare for a mentor session (StartX Office Hours, a mentor 1:1, or a Lead Mentor 1:1). Use when a founder says they have office hours or a mentor session coming up and wants to prep, sharpen their ask, or "get ready." Walks six StartX forcing questions one at a time, routes by session type, company stage, and BoA cycle (pre-BoA-1, between BoA-1 and BoA-2, between BoA-2 and BoA-3 or post-program wrap-up), flags weak spots, and helps build an office-hours prep doc in the StartX BoA challenge format (challenge, options, pros and cons, lean, ask) that can also seed a Board of Advisors pre-read. Helps sharpen the founder's thinking; it does not replace it or invent evidence.
 ---
 
 # StartX Office Hours Prep
 
-Version: v1.1 (2026-06-12). See CHANGELOG.
+Version: v1.2 (2026-06-24; companion to `startx-boa-prep` and `startx-boa-debrief`). See CHANGELOG.
 
 Compatibility: Runs on all Claude surfaces. In Claude Code or Cowork the prep doc is written to the working directory and persists. In the claude.ai app the draft is a downloadable file that does not persist between conversations (download or copy to save). In chat-only sessions the draft lives in the conversation.
 
@@ -38,26 +38,30 @@ Gets a StartX founder to office hours (or another mentor session) with sharper f
 
 ## Voice
 
-Sound like a StartX mentor talking with a founder in a working session, not a consultant presenting to a client. Lead with the point, stay concrete (real users, real workflows, real numbers, real decisions), be direct about gaps, and never write conviction the founder has not earned. The BoA framing applies: a working session, not a pitch; safe space, but professional; vulnerability is welcome, fabrication is not.
+Sound like a StartX mentor in a working session, not a consultant presenting to a client. Lead with the point, stay concrete (real users, real workflows, real numbers, real decisions), be direct about gaps, and never write conviction the founder has not earned.
 
 **Banned vocabulary (use none of these words or phrases):**
 
-- AI-writing tells (the words and connective tissue that signal generic AI prose): delve, crucial, robust, comprehensive, nuanced, multifaceted, furthermore, moreover, additionally, pivotal, landscape, tapestry, underscore, foster, showcase, intricate, vibrant, fundamental, significant.
-- StartX founder-speak that dilutes pushback: interesting, leverage, ecosystem, synergies, drive value, circle back, unlock, holistic.
+- AI-writing tells: delve, crucial, robust, comprehensive, nuanced, multifaceted, furthermore, moreover, additionally, pivotal, landscape, tapestry, underscore, foster, showcase, intricate, vibrant, fundamental, significant.
+- Founder-speak that dilutes pushback: interesting, leverage, ecosystem, synergies, drive value, circle back, unlock, holistic.
 
-These words let weak answers sound strong and let a mentor's pushback dissolve into agreement. If you reach for one, the underlying point is probably not yet specific enough. Rewrite it with a real user, a real workflow, a real number, or a real decision.
+These words let weak answers sound strong and let pushback dissolve into agreement. If you reach for one, the underlying point is probably not specific enough. Rewrite it with a real user, a real workflow, a real number, or a real decision.
 
-**Punctuation:**
+**Punctuation:** no em dashes. Use commas, parentheses, or short sentences.
 
-- No em dashes. Use commas, parentheses, or short sentences.
+**Post-write check:** after each write to any artifact or message, scan for em dashes and banned vocabulary; fix before presenting.
 
-**Post-write check:** after each write to the prep doc or mentor message, check the output for em dashes and banned vocabulary; fix before presenting.
+## Grading traction claims
+
+The claims ladder below grades every traction claim; use it in the Step 1 reconciliation, in the demand-reality counter-move, and inline in the prep doc.
+
+Grade every traction claim on one ladder, strongest to weakest: **signed** (contract executed, money committed on paper), **verbal** (a clear yes with no signature yet), **in-pipeline** (in active negotiation or procurement), **interested** (positive signal with some behavior behind it, a pilot or repeated use, but no commitment). If there is no behavior or commitment behind a claim, it is not evidence: record it as a gap, name the behavior that would move it onto the ladder, and do not let it inflate a grade. Contract over claim, never enthusiasm.
 
 ## Opening frame (Step 0, say this before asking anything)
 
 Open with this orientation. Adapt the words, keep the order (value, cost, control) and the brevity. Never quote a duration; do not expand the frame. On warm starts, silent ingest may come first; deliver the frame together with the already-answered list, always before your first question to the founder.
 
-> Quick orientation before we start. You'll leave with two things: a prep doc for the room and a short message to send your mentor ahead of the session. I read whatever you already have first (deck, wiki, notes), then ask only what it doesn't answer, usually 2 to 4 questions, one at a time. The draft builds as we go, so you can stop at any point and keep what's there; resume later by re-running this and giving me the draft, as a file or a paste.
+> Quick orientation before we start. You'll leave with two things: a prep doc for the room and the points for a short note to send your mentor ahead of the session. I read whatever you already have first (deck, wiki, notes), then ask only what it doesn't answer, usually 2 to 4 questions, one at a time. The draft builds as we go, so you can stop at any point and keep what's there; resume later by re-running this and giving me the draft, as a file or a paste.
 
 ## Inputs to gather (Step 1)
 
@@ -92,7 +96,7 @@ Combine three axes: session type, company stage, and BoA cycle phase. Do not ask
 
 - **StartX Office Hours (group)**: optimize for a sharp, public-facing pitch of one challenge. Lead with Q3 (desperate specificity) and Q4 (narrowest wedge) so the room can give useful input on a concrete decision. Prep doc framed as one headline challenge plus 1 to 2 sharp asks.
 - **Mentor 1:1**: optimize for honest exploration with one experienced advisor. Lead with the question matching the founder's stated ask, then add 1 to 2 forcing questions that probe weak spots. Prep doc framed as 2 to 3 challenges with the lean and ask explicit. Exception: when the founder's ask is itself about sequencing or focus (common pre-BoA-1, for example "what should we lead the board with"), a single lead challenge plus the weighted forcing question is the right shape; do not pad to three.
-- **Lead Mentor 1:1**: optimize for higher-trust, longer-arc judgment. Lead with Q1 (demand reality) and Q6 (future-fit), then add the question matching the founder's stated ask. Prep doc framed for strategic counsel: longer context section, decision-needed and what-great-looks-like sharper, open risks foregrounded.
+- **Lead Mentor 1:1**: optimize for higher-trust, longer-arc judgment. Lead with Q1 (demand reality) and Q6 (future-fit), then add the question matching the founder's stated ask. Prep doc framed for strategic counsel: longer context section, decision-needed and what-great-looks-like sharper, open risks foregrounded. This is the right venue for personal or vulnerable topics (co-founder dynamics, personal struggles); keep group office hours and board time for strategic questions about market, go-to-market, and fundraising.
 
 **By company stage:**
 
@@ -190,6 +194,8 @@ Do not skip this shape, even for small mid-session decisions. The shape is the w
 
 **The 60-second test, applied to every ask:** could the mentor act on it within a minute of hearing it (make the intro, answer the question, pressure-test the lean)? If not, sharpen it before it enters the doc.
 
+**Frame each ask:** say why you are asking and how it ties to the company, so the mentor engages the real decision rather than a context-free question.
+
 ## Produce the prep doc (Step 6)
 
 Write a prep doc in StartX's challenge format. Use the founder's real words and evidence only.
@@ -230,7 +236,7 @@ Handling: KEEP INTERNAL (stays with the founder; never sent, never shared)
 {Candid working notes the founder wants to keep with the doc: claims-reconciliation detail, weak-spot flags, anything not for the room.}
 ```
 
-Also produce: an optional 4-6 line message to paste into Slack or email to the mentor ahead of the session (header label: SEND AHEAD). The message is a paste-ready body produced in the conversation; do not embed it inside the prep doc file.
+Also produce: an optional mentor-note outline, the few points to put in the message you send your mentor ahead of the session. Points, not drafted prose; you write the message in your own voice. Keep it inside the KEEP INTERNAL appendix; the message you write from it is the one that goes ahead.
 
 ## Where StartX can help next
 
@@ -239,14 +245,14 @@ Close the prep doc by pointing the founder to the StartX surface that can go dee
 ## Outputs (Step 7)
 
 - `office-hours-prep-{YYYY-MM-DD}.md` (header label: BRING TO SESSION), with the optional internal appendix (KEEP INTERNAL).
-- The paste-ready mentor message (SEND AHEAD).
+- A mentor-note outline (points for your message), carried inside the KEEP INTERNAL appendix; you write the message from it.
 
-Close in two lines: send the message ahead, bring the doc, keep the internal appendix to yourself. Nothing is shared until the founder sends it. If files do not persist on this surface, add: download or copy the draft now; resume later by handing it back. If the company is health-, wellness-, finance-, or legal-adjacent, also say the not-advice guardrail aloud: this prep is an operations and planning aid, not legal, regulatory, medical, or financial advice. The not-advice and non-endorsement disclaimers are spoken in session; never place them in the mentor message or anything else the founder pastes into their send.
+Close in two lines: write your mentor note from the outline and send it ahead, bring the doc, keep the internal appendix to yourself. Nothing is shared until the founder sends it. If files do not persist on this surface, add: download or copy the draft now; resume later by handing it back. If the company is health-, wellness-, finance-, or legal-adjacent, also say the not-advice guardrail aloud: this prep is an operations and planning aid, not legal, regulatory, medical, or financial advice. The not-advice and non-endorsement disclaimers are spoken in session; never place them in the note the founder sends.
 
 ## Guardrails
 
-- **Sharpen, do not replace.** No decisions made for the founder, no fabricated evidence, quotes, or metrics. If the founder lacks evidence, say so and recommend how to get it.
-- **Non-endorsement.** Community-contributed; not endorsed, validated, or audited by StartX or Anthropic.
+- **Sharpen, do not replace.** No decisions are made for the founder. No fabricated evidence, quotes, metrics, or traction. Missing evidence is named, not invented, and the skill says how to get it.
+- **Non-endorsement.** A community-contributed skill, developed and released by Adam McGinty (1SF); not affiliated with, endorsed by, or audited by StartX or Anthropic.
 - **Not advice.** An operations and planning aid, not legal, regulatory, medical, or financial advice.
 
 ## Success criteria
@@ -262,6 +268,16 @@ Founder input: "Daily briefing app for my calendar. I want feedback on whether t
 Routing fires Q4 (narrowest wedge) first because of session type and BoA phase (the BoA-2 board will want to see what changed since BoA-1, with prior action items closed). The skill also pushes on Q3 (desperate specificity): the founder cannot name a user beyond "busy professionals," so it flags that and recommends 3 conversations. On Q4, the real wedge turns out to be a single morning email, not an app. On Q1 (demand reality), the founder has no paying evidence, so the "I don't know" fallback fires: the prep doc demotes the "should I add Slack" question and instead leads with "Challenge: is the wedge a morning email or an app?" with "Our lean: none yet, discovery question below" and "The ask: help me design a 2-week test that produces real demand evidence." "Name 3 target users" lands as an open risk to resolve.
 
 ## CHANGELOG
+
+### v1.2 (2026-06-24)
+
+**Added**
+- Shared-reference managed blocks wired in: guardrails, voice rules, and the claims ladder, kept in sync across the StartX skills.
+- A strategic-vs-personal routing rule: personal or vulnerable topics route to a Lead Mentor 1:1; group office hours and board time stay on strategy.
+- Ask discipline: frame each ask (why, and how it ties to the company).
+
+**Changed**
+- Voice rules and the claims ladder now come from the shared canonical source (a minor wording reconciliation from v1.1).
 
 ### v1.1 (2026-06-12)
 
