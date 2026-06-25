@@ -151,3 +151,18 @@ jobs:
       - uses: actions/checkout@v4
       - name: Run content lint
         run: python3 .github/scripts/validate_skills.py
+
+  plugin-install-smoke:
+    name: Install plugins (real tooling)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install Claude Code CLI
+        run: |
+          npm install -g @anthropic-ai/claude-code
+          claude --version
+      - name: Validate manifest (strict) + install every local plugin
+        run: bash .github/scripts/install_smoke.sh .
