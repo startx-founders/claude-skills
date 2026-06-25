@@ -1,0 +1,8 @@
+{
+  "_comment": "House style for the StartX BoA AI Skills family (1SF), enforced by .github/scripts/validate_skills.py. shared_blocks must be byte-identical across every 1SF skill that contains them; the claims-ladder block is intentionally NOT listed because its lead-in sentence is contextualized per skill. Banned vocabulary is intentionally not linted here: these SKILL.md files quote the banned words as bad examples, so a static word scan would false-positive on correct prose. The skills self-enforce banned vocabulary on their generated output via their own Voice/post-write check.",
+  "shared_blocks": [
+    "Voice",
+    "Guardrails"
+  ],
+  "forbid_em_dash": true
+}
