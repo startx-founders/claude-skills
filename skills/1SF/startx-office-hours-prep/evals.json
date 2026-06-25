@@ -1,0 +1,14 @@
+{
+  "triggers": {
+    "positive": [
+      "I have office hours with my mentor tomorrow, help me get ready",
+      "help me sharpen my ask for my lead mentor 1:1",
+      "I have a mentor session coming up and want to prep my question"
+    ],
+    "antipattern": [
+      "debug this python stack trace for me",
+      "I have a board of advisors meeting, help me build the pre-read",
+      "I just got out of my board meeting, help me debrief"
+    ]
+  }
+}

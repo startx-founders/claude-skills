@@ -33,8 +33,16 @@ for p in json.load(open('$MP')).get('plugins', []):
         print(p['name'])
 ")
 
-echo "::group::claude plugin validate . --strict"
-claude plugin validate . --strict
+# Gate on plain validate (real defects only). --strict additionally nags on
+# unrecognized fields, which is the one place validate can false-positive on a
+# harmless PR, so it runs as an advisory warning, not a blocker.
+echo "::group::claude plugin validate . (gate)"
+claude plugin validate .
+echo "::endgroup::"
+
+echo "::group::claude plugin validate . --strict (advisory)"
+claude plugin validate . --strict \
+  || echo "::warning::strict validation found issues (advisory, not blocking)"
 echo "::endgroup::"
 
 echo "::group::marketplace add"

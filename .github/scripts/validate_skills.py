@@ -156,6 +156,22 @@ def main():
             err(f"{rel}: marketplace name '{entry.get('name')}' != SKILL.md "
                 f"name '{name}'")
 
+        # Optional Tier-2 trigger evals. Advisory (warn): malformed eval data
+        # should not block a merge, but the author should know it won't run.
+        evals_path = skill_dir / "evals.json"
+        if evals_path.exists():
+            try:
+                ev = json.loads(evals_path.read_text())
+                trig = ev.get("triggers", {})
+                if not isinstance(trig, dict) or not (
+                    isinstance(trig.get("positive"), list)
+                    or isinstance(trig.get("antipattern"), list)
+                ):
+                    warn(f"{rel}/evals.json: expected triggers.positive / "
+                         f"triggers.antipattern arrays; trigger eval will skip it")
+            except json.JSONDecodeError as e:
+                warn(f"{rel}/evals.json is not valid JSON: {e}")
+
     # Opt-in per-author rules.
     lint_dir = root / ".github" / "skill-lint"
     for author, skill_mds in sorted(by_author.items()):

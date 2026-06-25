@@ -15,7 +15,7 @@ jobs:
     name: Validate marketplace.json
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: Validate required fields
         run: |
           python3 <<'PY'
@@ -64,7 +64,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 0
       - name: Detect new /skills/<dir>/ similar to existing
@@ -120,7 +120,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 0
       - name: Flag PRs touching multiple authors
@@ -148,21 +148,43 @@ jobs:
     name: Validate skill content
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: Run content lint
         run: python3 .github/scripts/validate_skills.py
+
+  security-scan:
+    name: Scan for committed secrets
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Conservative hardcoded-credential scan
+        run: python3 .github/scripts/scan_security.py
+
+  workflow-security:
+    name: Audit our own workflows (zizmor)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Run zizmor on .github/workflows
+        # Gate on high severity only — the supply-chain / injection class that
+        # actually enables compromise (unpinned actions, template injection,
+        # dangerous triggers). Medium "artipacked" findings are low-confidence
+        # credential-persistence notes and benign here (lint jobs upload nothing;
+        # the eval job uploads only its report), so gating on them would add
+        # false-positive friction without security value.
+        run: pipx run zizmor --min-severity high .github/workflows
 
   plugin-install-smoke:
     name: Install plugins (real tooling)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: "22"
       - name: Install Claude Code CLI
         run: |
           npm install -g @anthropic-ai/claude-code
           claude --version
-      - name: Validate manifest (strict) + install every local plugin
+      - name: Validate manifest (gate) + advisory strict + install every plugin
         run: bash .github/scripts/install_smoke.sh .

@@ -1,0 +1,51 @@
+name: evals
+
+# Tier 2 — the trigger signal. Advisory, never a merge gate.
+# Runs nightly and on demand, NOT on pull_request. Running only in these trusted
+# contexts is deliberate: it keeps the API credential away from untrusted fork
+# code, so the pull_request_target / two-workflow secret-handling complexity
+# never applies here. See docs/CI-ARCHITECTURE.md.
+
+on:
+  schedule:
+    - cron: "0 9 * * *" # 09:00 UTC nightly
+  workflow_dispatch: # maintainers can run it against a branch before merging
+
+permissions:
+  contents: read
+
+concurrency:
+  group: evals
+  cancel-in-progress: false
+
+jobs:
+  trigger-evals:
+    name: Skill trigger evals (advisory)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+      - name: Install Claude Code CLI
+        run: |
+          npm install -g @anthropic-ai/claude-code
+          claude --version
+      - name: Run trigger evals
+        env:
+          # Subscription auth (no metered API spend). Generate with
+          # `claude setup-token` and store as a repo secret.
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          EVAL_SAMPLES: "5"
+          EVAL_MODEL: "sonnet"
+          EVAL_REPORT: "eval-report.md"
+        run: python3 .github/scripts/run_skill_evals.py .
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: trigger-eval-report
+          path: eval-report.md
+      - name: Post report to job summary
+        if: always()
+        run: cat eval-report.md >> "$GITHUB_STEP_SUMMARY" || true
