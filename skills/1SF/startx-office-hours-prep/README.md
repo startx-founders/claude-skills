@@ -1,38 +1,39 @@
 # startx-office-hours-prep
 
-A Claude Code skill that helps a StartX founder prepare for a mentor session (StartX Office Hours, a mentor 1:1, or a Lead Mentor 1:1). It walks six StartX forcing questions one at a time, routes by session type, company stage, and BoA cycle phase, flags weak spots, and produces an office-hours prep doc in the StartX Board of Advisors challenge format (challenge, options, pros and cons, lean, ask) that can also seed a BoA pre-read.
+Prepares a StartX founder for a mentor session (office hours, a mentor 1:1, or a Lead Mentor 1:1). Runs the StartX forcing questions, routes by session type, company stage, and BoA cycle phase, and helps you build a prep doc in StartX's challenge format plus a mentor-note outline you write your message from. Helps sharpen the founder's thinking; it does not decide for the founder or invent evidence.
 
-Design intent: sharpen the founder's thinking, do not replace it. The skill asks the questions a great mentor would ask. It does not make decisions for the founder, write code, or invent evidence.
+## The StartX BoA AI Skills family
+
+One of three skills in the **StartX BoA AI Skills family** (by [1SF](https://github.com/1SF)). Each helps you think your way through one part of the BoA loop; none does the work or makes the calls for you:
+
+- **startx-office-hours-prep** helps you sharpen a mentor session: the question to bring and how to frame it.
+- **startx-boa-prep** helps you get ready for a board meeting: the challenges to put to the board and the evidence behind them.
+- **startx-boa-debrief** helps you debrief afterward: think through the board's input and shape your own follow-up and next steps.
+
+Loop: prepare, meet, debrief, and carry it into the next round. Overview: [the family README](../README.md).
 
 ## Usage
 
-In Claude Code, from your working repo or notes directory:
-
-```
-/startx-office-hours-prep
-```
-
-The skill opens by telling you what you'll get and what it needs, usually 2 to 4 questions after it reads your materials. Hand it whatever holds your company context (a deck, a wiki or Notion export, a memo); it reads that first and asks only the gaps. The draft builds as you go, so you can stop anytime and resume later by handing it the draft. It writes `office-hours-prep-YYYY-MM-DD.md` to the current directory, and every output is labeled SEND AHEAD, BRING TO SESSION, or KEEP INTERNAL so you know what goes to your mentor and what stays with you.
+`/startx-office-hours-prep` in Claude Code, from your working or notes directory. Hand it your deck, wiki, or notes; it reads those first and asks only the gaps (usually 2 to 4 questions), building a resumable draft. It writes `office-hours-prep-YYYY-MM-DD.md` and labels every output BRING TO SESSION or KEEP INTERNAL.
 
 ## Requirements
 
-- Runs on any Claude surface. No sudo, no special mount, no API access.
-- In Claude Code or Cowork, the prep doc is written to your working directory and persists. In the claude.ai app, download or copy the draft before closing the conversation (the workspace there does not persist). In chat-only sessions the draft lives in the conversation; copy it to keep it. Resume any time by giving the skill your draft, as a file or a paste.
+Any Claude surface. No sudo, mount, or API. In Claude Code or Cowork the draft persists in your working directory; in the claude.ai app, download or copy it before closing. Resume any time by handing the skill your draft.
 
 ## Status
 
-v1.1 (2026-06-12). Stable; used in live StartX sessions. Full history in the SKILL.md CHANGELOG.
+v1.2 (2026-06-24). Companion to `startx-boa-prep` and `startx-boa-debrief`. History in the SKILL.md CHANGELOG.
 
 ## Guardrails
 
-- **Sharpen, do not replace.** No decisions made for the founder, no fabricated evidence, quotes, or metrics. If the founder lacks evidence, say so and recommend how to get it.
-- **Non-endorsement.** Community-contributed; not endorsed, validated, or audited by StartX or Anthropic.
+- **Sharpen, do not replace.** No decisions are made for the founder. No fabricated evidence, quotes, metrics, or traction. Missing evidence is named, not invented, and the skill says how to get it.
+- **Non-endorsement.** A community-contributed skill, developed and released by Adam McGinty (1SF); not affiliated with, endorsed by, or audited by StartX or Anthropic.
 - **Not advice.** An operations and planning aid, not legal, regulatory, medical, or financial advice.
 
-## Author
+## Disclaimer
 
-Created by [Adam McGinty](https://github.com/1SF), StartX mentor. Part of a StartX founder-support skill suite built around the Board of Advisors prep-to-debrief loop.
+This skill, and any document it produces, is for informational purposes only and does not constitute legal, medical, financial, or other professional advice. It is provided "as is", without warranties of any kind, express or implied, including merchantability, fitness for a particular purpose, and non-infringement. To the fullest extent permitted by law, the author and contributors disclaim all liability for any loss or damage arising from its use. Consult a qualified professional before acting on its output.
 
 ## License
 
-MIT, see [LICENSE](LICENSE). Free for the StartX community and anyone else to use, modify, and share. The only condition is that the copyright and license notice travel with it.
+MIT, see [LICENSE](LICENSE). By [Adam McGinty](https://github.com/1SF), StartX mentor.
