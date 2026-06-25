@@ -4,31 +4,34 @@
 For each skill that ships an evals.json, run its golden ("positive") and
 "antipattern" utterances through a real headless Claude Code call with the whole
 local skill family loaded, and observe which skill (if any) auto-invokes. This is
-a SIGNAL, not a gate: by default it always exits 0 and writes a report. The
-firing is detected deterministically from the stream; only the model's choice is
-stochastic, which we absorb by sampling each utterance N times and reporting a
-rate.
+a SIGNAL, not a gate: it always exits 0. Firing is detected deterministically
+from the stream; only the model's choice is stochastic, which we absorb by
+sampling each utterance N times and reporting a rate.
 
-Why load the whole family: antipattern utterances are most useful when a sibling
-skill is present to be confused with, so we load every local skill via repeated
---plugin-dir and check whether *this* skill fired.
+Outputs (paths via env, all optional):
+  EVAL_REPORT  human markdown report (default eval-report.md) — used as the PR
+               comment body; carries a marker so the comment can be upserted.
+  EVAL_JSON    structured results (default eval-results.json).
+  EVAL_BOARD   if set, write the catalog health board here (nightly full runs).
+  EVAL_BADGES  if set (a dir), write shields.io endpoint JSON per skill there.
 
-Auth: uses whatever Claude Code auth is configured. In CI, set
-CLAUDE_CODE_OAUTH_TOKEN (subscription billing). Locally, your claude.ai login is
-used; unset any stale ANTHROPIC_API_KEY first.
+Scope:
+  EVAL_ONLY    comma-separated skill names to evaluate (PR runs pass only the
+               changed skills). The whole family is still loaded for realistic
+               cross-skill context; only these skills' utterances are run.
 
-Env knobs:
-  EVAL_SAMPLES   samples per utterance (default 3; use 1 for a quick local pass)
-  EVAL_MODEL     model id/alias to pin (default: sonnet)
-  EVAL_REPORT    output markdown path (default: eval-report.md)
+Other knobs:
+  EVAL_SAMPLES samples per utterance (default 3; use 1 for a quick local pass)
+  EVAL_MODEL   model id/alias to pin (default sonnet)
 
-Run locally:
-  EVAL_SAMPLES=1 python3 .github/scripts/run_skill_evals.py [repo_root]
+Auth: uses whatever Claude Code auth is configured. CI sets
+CLAUDE_CODE_OAUTH_TOKEN (subscription, no metered spend). Locally, your claude.ai
+login is used; unset any stale ANTHROPIC_API_KEY first.
 
-evals.json shape (next to SKILL.md):
-  { "triggers": { "positive": ["..."], "antipattern": ["..."] } }
+Run locally:  EVAL_SAMPLES=1 EVAL_ONLY=startx-boa-prep python3 .github/scripts/run_skill_evals.py .
 """
 
+import datetime
 import json
 import os
 import pathlib
@@ -37,17 +40,15 @@ import sys
 
 SAMPLES = int(os.environ.get("EVAL_SAMPLES", "3"))
 MODEL = os.environ.get("EVAL_MODEL", "sonnet")
+ONLY = [s.strip() for s in os.environ.get("EVAL_ONLY", "").split(",") if s.strip()]
+MARKER = "<!-- skill-trigger-evals -->"
 
 
 def discover(root):
-    """Return {skill_name: {dir, evals}} for every local skill, and the list of
-    all skill dirs to load."""
-    skills = {}
-    dirs = []
+    skills, dirs = {}, []
     for skill_md in sorted((root / "skills").glob("*/*/SKILL.md")):
         d = skill_md.parent
         dirs.append(d)
-        name = d.name
         ev = d / "evals.json"
         evals = None
         if ev.exists():
@@ -55,13 +56,11 @@ def discover(root):
                 evals = json.loads(ev.read_text())
             except json.JSONDecodeError as e:
                 print(f"::warning::{ev.relative_to(root)} is not valid JSON: {e}")
-        skills[name] = {"dir": d, "evals": evals}
+        skills[d.name] = {"dir": d, "evals": evals}
     return skills, dirs
 
 
 def fired_skills(stream_text):
-    """Extract the set of skill names that fired (namespace stripped) from a
-    stream-json transcript."""
     fired = set()
     for line in stream_text.splitlines():
         line = line.strip()
@@ -91,17 +90,12 @@ def run_once(utterance, plugin_dirs):
     ]
     for d in plugin_dirs:
         cmd += ["--plugin-dir", str(d)]
-    proc = subprocess.run(
-        cmd, capture_output=True, text=True, stdin=subprocess.DEVNULL,
-    )
-    # exit code is often nonzero (max-turns after a skill fires) — we read stdout.
-    return fired_skills(proc.stdout)
+    proc = subprocess.run(cmd, capture_output=True, text=True, stdin=subprocess.DEVNULL)
+    return fired_skills(proc.stdout)  # exit code is unreliable; read the stream
 
 
 def sample(utterance, plugin_dirs, target):
-    """Run an utterance SAMPLES times; return (fired_target_count, other_counts)."""
-    hit = 0
-    others = {}
+    hit, others = 0, {}
     for _ in range(SAMPLES):
         fired = run_once(utterance, plugin_dirs)
         if target in fired:
@@ -112,70 +106,116 @@ def sample(utterance, plugin_dirs, target):
     return hit, others
 
 
+def color(recall_ok, misfires):
+    if misfires > 0:
+        return "red"
+    return "brightgreen" if recall_ok else "yellow"
+
+
 def main():
     root = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else ".").resolve()
     skills, dirs = discover(root)
     tested = {n: s for n, s in skills.items() if s["evals"]}
+    if ONLY:
+        tested = {n: s for n, s in tested.items() if n in ONLY}
+
+    report = [MARKER, "# Trigger eval report", "",
+              f"_samples/utterance: {SAMPLES} · model: {MODEL} · "
+              f"family loaded: {len(dirs)} · evaluated: {len(tested)}_", ""]
+    results = []
+
     if not tested:
-        print("no skills ship evals.json — nothing to evaluate")
-        # write an empty report so CI has an artifact
+        report.append("_No skills in scope ship an `evals.json`._")
         pathlib.Path(os.environ.get("EVAL_REPORT", "eval-report.md")).write_text(
-            "# Trigger eval report\n\nNo skills ship `evals.json` yet.\n"
-        )
+            "\n".join(report) + "\n")
+        pathlib.Path(os.environ.get("EVAL_JSON", "eval-results.json")).write_text("[]\n")
+        print("no skills in scope ship evals.json — nothing to evaluate")
         return
 
-    lines = ["# Trigger eval report", ""]
-    lines.append(f"_Samples per utterance: {SAMPLES} · model: {MODEL} · "
-                 f"family skills under test: {len(dirs)}_")
-    lines.append("")
-    summary = []
-
     for name in sorted(tested):
-        ev = tested[name]["evals"].get("triggers", {})
-        pos = ev.get("positive", []) or []
-        neg = ev.get("antipattern", []) or []
-        lines.append(f"## {name}")
-        lines.append("")
+        trig = tested[name]["evals"].get("triggers", {})
+        pos = trig.get("positive", []) or []
+        neg = trig.get("antipattern", []) or []
+        report += [f"## {name}", ""]
 
         recall_hits = 0
         if pos:
-            lines.append("**Golden (should fire):**")
+            report.append("**Golden (should fire):**")
             for u in pos:
                 hit, others = sample(u, dirs, name)
-                ok = hit >= (SAMPLES + 1) // 2  # majority
+                ok = hit >= (SAMPLES + 1) // 2
                 recall_hits += 1 if ok else 0
-                mark = "✅" if ok else "❌"
                 extra = f" · also fired: {others}" if others else ""
-                lines.append(f"- {mark} {hit}/{SAMPLES} `{u}`{extra}")
-            lines.append("")
+                report.append(f"- {'✅' if ok else '❌'} {hit}/{SAMPLES} `{u}`{extra}")
+            report.append("")
 
-        fp = 0
+        misfires = 0
         if neg:
-            lines.append("**Antipattern (should stay silent):**")
+            report.append("**Antipattern (should stay silent):**")
             for u in neg:
                 hit, others = sample(u, dirs, name)
                 ok = hit == 0
-                fp += 0 if ok else 1
-                mark = "✅" if ok else "⚠️"
-                extra = f" · correctly routed to: {others}" if (ok and others) else (
-                    f" · also fired: {others}" if others else "")
-                lines.append(f"- {mark} fired {hit}/{SAMPLES} `{u}`{extra}")
-            lines.append("")
+                misfires += 0 if ok else 1
+                extra = (f" · correctly routed to: {others}" if (ok and others)
+                         else (f" · also fired: {others}" if others else ""))
+                report.append(f"- {'✅' if ok else '⚠️'} fired {hit}/{SAMPLES} `{u}`{extra}")
+            report.append("")
 
-        recall = f"{recall_hits}/{len(pos)}" if pos else "n/a"
-        summary.append((name, recall, fp, len(neg)))
+        recall_ok = bool(pos) and recall_hits == len(pos)
+        results.append({
+            "skill": name,
+            "recall_hits": recall_hits, "recall_total": len(pos),
+            "misfires": misfires, "antipattern_total": len(neg),
+            "samples": SAMPLES,
+        })
 
-    head = ["", "## Summary", "", "| skill | golden recall | antipattern misfires |",
-            "|---|---|---|"]
-    for name, recall, fp, nneg in summary:
-        head.append(f"| {name} | {recall} | {fp}/{nneg} |")
-    report = "\n".join(lines + head) + "\n"
+    # Summary table in the report.
+    report += ["## Summary", "", "| skill | golden recall | antipattern misfires |",
+               "|---|---|---|"]
+    for r in results:
+        report.append(f"| {r['skill']} | {r['recall_hits']}/{r['recall_total']} "
+                      f"| {r['misfires']}/{r['antipattern_total']} |")
+    report_text = "\n".join(report) + "\n"
 
-    out = pathlib.Path(os.environ.get("EVAL_REPORT", "eval-report.md"))
-    out.write_text(report)
-    print(report)
-    print(f"\nreport written to {out}")
-    # Advisory: always exit 0. (Promotion to a gate is a future, deliberate step.)
+    pathlib.Path(os.environ.get("EVAL_REPORT", "eval-report.md")).write_text(report_text)
+    pathlib.Path(os.environ.get("EVAL_JSON", "eval-results.json")).write_text(
+        json.dumps(results, indent=2) + "\n")
+    print(report_text)
+
+    # Catalog health board (nightly full runs only).
+    board_path = os.environ.get("EVAL_BOARD")
+    if board_path:
+        now = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+        board = ["# Skill health", "",
+                 f"_Trigger evals, regenerated {now}. Advisory signal — see "
+                 f"`docs/CI-ARCHITECTURE.md`. History: the git log of this file._", "",
+                 "| skill | golden recall | antipattern misfires | status |",
+                 "|---|---|---|---|"]
+        for r in results:
+            recall_ok = r["recall_total"] and r["recall_hits"] == r["recall_total"]
+            status = "🔴" if r["misfires"] else ("🟢" if recall_ok else "🟡")
+            board.append(f"| {r['skill']} | {r['recall_hits']}/{r['recall_total']} "
+                         f"| {r['misfires']}/{r['antipattern_total']} | {status} |")
+        pathlib.Path(board_path).write_text("\n".join(board) + "\n")
+        print(f"board written to {board_path}")
+
+    # shields.io endpoint badges (one JSON per skill).
+    badges_dir = os.environ.get("EVAL_BADGES")
+    if badges_dir:
+        bd = pathlib.Path(badges_dir)
+        bd.mkdir(parents=True, exist_ok=True)
+        for r in results:
+            recall_ok = r["recall_total"] and r["recall_hits"] == r["recall_total"]
+            msg = f"{r['recall_hits']}/{r['recall_total']}"
+            if r["misfires"]:
+                msg += f", {r['misfires']} misfire"
+            (bd / f"{r['skill']}.json").write_text(json.dumps({
+                "schemaVersion": 1, "label": "trigger evals", "message": msg,
+                "color": color(recall_ok, r["misfires"]),
+            }) + "\n")
+        print(f"badges written to {bd}/")
+
+    # Advisory: always exit 0. Promotion to a gate is a future, deliberate step.
 
 
 if __name__ == "__main__":

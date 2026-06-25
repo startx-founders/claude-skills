@@ -1,5 +1,7 @@
 # startx-boa-prep
 
+[![trigger evals](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fstartx-founders%2Fclaude-skills%2Feval-results%2Fbadges%2Fstartx-boa-prep.json)](https://github.com/startx-founders/claude-skills/blob/eval-results/docs/skill-health.md)
+
 Prepares a StartX founder for a Board of Advisors meeting or formal advisor review. Runs the six StartX forcing questions across the company and helps you build an advisor-ready pre-read plus a 2-3 challenge agenda to send 48 to 72 hours ahead. Helps sharpen the founder's thinking; it does not decide, write code, or invent evidence.
 
 ## The StartX BoA AI Skills family

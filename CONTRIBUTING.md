@@ -13,6 +13,38 @@ Current and alumni StartX founders. We verify membership socially, not via email
 
 We'll raise the bar over time. For now, getting more StartX founders to share working tools matters more than polish.
 
+## Trigger evals (recommended, opt-in)
+
+Ship an `evals.json` next to your `SKILL.md`. It is your skill's behavioral
+contract: the utterances that **should** make Claude invoke your skill, and the
+ones that should **not** (including near-misses that belong to a sibling skill).
+
+```json
+{
+  "triggers": {
+    "positive":    ["help me prep for my board meeting", "build my BoA pre-read"],
+    "antipattern": ["write me a marketing email", "help me debrief my board meeting"]
+  }
+}
+```
+
+What it buys you:
+
+- A nightly job runs these against the real CLI and tracks, per skill, how
+  reliably your `description` triggers (golden recall) and whether it
+  misfires on antipatterns. Results land on the
+  [skill-health board](https://github.com/startx-founders/claude-skills/blob/eval-results/docs/skill-health.md)
+  (regenerated nightly on the `eval-results` branch; its git log is the trend)
+  and as a badge in your skill's README.
+- On a PR that edits your skill, the same check posts an **advisory comment** so
+  you (and the reviewer) see the trigger impact of a description change before
+  merging. It never blocks the merge.
+
+It is optional and never gates a merge today (see `docs/CI-ARCHITECTURE.md`). But
+it compounds: **whenever your skill mis-fires or fails to fire in real use, add
+that utterance to `evals.json`.** Over time the set becomes a regression corpus,
+and every author's antipatterns sharpen the whole catalog's disambiguation.
+
 ## Two ways to contribute a skill
 
 ### Option A — Point us at your own repo (zero friction)

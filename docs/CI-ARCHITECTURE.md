@@ -54,8 +54,15 @@ replace it.
 
 ### Tier 2 — The Signal (model-in-the-loop, never blocks)
 
-Runs **nightly** and **on demand** (`workflow_dispatch`), **not** on the PR
-critical path. Posts a report; never a required check.
+Runs in three ways, always advisory, never a required check:
+
+- **On a same-repo PR that touches a skill** — evaluates only the changed
+  skill(s) and posts/updates an advisory comment, so a reviewer sees the trigger
+  impact of a description change at the moment it is made. Fork PRs are skipped
+  (the secret is never exposed to untrusted code).
+- **Nightly** — evaluates every skill, regenerates the skill-health board +
+  badges, and publishes them (catches model drift over time).
+- **On demand** (`workflow_dispatch`) — a maintainer runs it whenever.
 
 | Check | What it measures |
 |---|---|
@@ -70,28 +77,52 @@ absorb by sampling each utterance N times and reporting a rate, not a verdict.
 Authors opt in by shipping an `evals.json` next to their `SKILL.md` (see
 [Authoring evals](#authoring-evals)). Skills without one are simply skipped.
 
+#### Where results live (so they compound and stay findable)
+
+Results must not evaporate into an expiring CI artifact. They live in two places,
+both connected back to the skill:
+
+- **The skill-health board + per-skill badges** are published to a dedicated
+  **`eval-results` branch** by the nightly job (`docs/skill-health.md` +
+  `badges/<skill>.json`). The board's **git history is the trend** — `git log -p`
+  shows every regression as a diff, no separate database. A separate branch
+  avoids fighting `main`'s branch protection and keeps `main` history clean.
+- **Each skill's README carries a status badge** (shields.io endpoint reading its
+  `badges/<skill>.json`) linking to the board. Standing at the skill, you reach
+  its health in one click; standing at the board, you see the whole catalog.
+
+The compounding asset, though, is **`evals.json` itself growing with
+experience**: when a skill mis-fires or fails to fire in real use, the fix is to
+add that utterance to its set. Each bug becomes a permanent regression case, and
+every author's antipatterns sharpen the whole catalog's cross-skill
+disambiguation.
+
 ### Tier 3 — Output quality (deferred, may never exist)
 
 LLM-as-judge grading of what a skill actually produces. This is the fuzziest and
 most false-positive-prone layer, so it is **not built**. If it is ever added it
 stays advisory. Revisit only if the trigger signal proves insufficient.
 
-## Why Tier 2 runs nightly instead of per-PR
+## Why Tier 2 never gates, and is safe even on PRs
 
-This single choice removes three problems at once:
+The PR-comment path runs a model-in-the-loop check during a PR, which sounds like
+the thing we said not to do. It is safe and useful because of three constraints,
+each addressing one real risk:
 
-1. **No fork-secret attack surface.** Running secret-using evals on untrusted PR
-   code is the root of the `pull_request_target` / two-workflow RCE class
-   (CVE-2025-61671). By running only in trusted contexts (schedule, manual,
-   push-to-main), that surface and its complex workaround simply do not exist.
-2. **No probabilistic check between a contributor and merge.** A flaky model
-   decision can never block a good PR.
-3. **Bounded cost.** Once a night over changed skills, not once per push. The
-   harness authenticates with a subscription `CLAUDE_CODE_OAUTH_TOKEN`
-   (see the workflow), so runs do not incur metered API spend.
+1. **No fork-secret attack surface.** The PR job is gated on
+   `head.repo == github.repository`, so it runs only for same-repo branch PRs by
+   org members — trusted code, secret safe. Fork PRs are skipped entirely. This
+   sidesteps the `pull_request_target` / two-workflow RCE class (CVE-2025-61671)
+   without that machinery. (Our contributors get org membership and push
+   branches, per CONTRIBUTING, so this covers the normal path.)
+2. **It is advisory, so it can never block.** The result is a PR comment, not a
+   required status check. A flaky model decision never sits between a contributor
+   and merge.
+3. **Bounded cost.** The PR job runs only the *changed* skills; nightly runs the
+   full set once a day. Both authenticate with a subscription
+   `CLAUDE_CODE_OAUTH_TOKEN`, so runs do not incur metered API spend.
 
-A maintainer who wants the signal *before* merging something significant runs the
-`evals` workflow manually against the branch.
+The distinction from the gate is not "off the PR" but "never blocking the PR."
 
 ## Promotion path: turning the signal into a gate
 
@@ -107,8 +138,10 @@ stays advisory permanently.
 ## What we deliberately do NOT do
 
 - No LLM-judge as a merge gate, ever (top false-positive source).
-- No model-in-the-loop check on the PR critical path.
-- No `pull_request_target` / two-workflow secret juggling.
+- No model-in-the-loop check that *blocks* a PR (the trigger eval comments, never
+  gates).
+- No `pull_request_target` / two-workflow secret juggling (same-repo gating
+  instead).
 - No snapshot / exact-match tests on skill prose (flaky by design; use the
   trigger signal and, if ever, rubric grading).
 - No external eval framework (promptfoo/DeepEval) — the trigger harness is ~150
@@ -150,7 +183,7 @@ promotion path above).
 .github/
   workflows/
     lint.yml          # Tier 1 — the gate (every PR)
-    evals.yml         # Tier 2 — the signal (nightly + manual)
+    evals.yml         # Tier 2 — the signal (same-repo PR comment + nightly + manual)
     release.yml       # auto-tag/release on push to main
   scripts/
     validate_skills.py  # Tier 1: structural + house-style lint
@@ -162,5 +195,13 @@ promotion path above).
     secret-allowlist.txt # documented example credentials to ignore
 skills/<author>/<skill>/
     SKILL.md
+    README.md           # carries a trigger-eval status badge -> the board
     evals.json          # optional, opt-in trigger eval set
+
+# eval-results branch (bot-owned, regenerated nightly; its git log = the trend)
+    docs/skill-health.md   # the catalog health board
+    badges/<skill>.json    # shields.io endpoint data per skill
 ```
+
+Also documents the per-skill evals convention for contributors in
+`CONTRIBUTING.md` ("Trigger evals").

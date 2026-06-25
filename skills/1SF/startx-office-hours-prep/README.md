@@ -1,5 +1,7 @@
 # startx-office-hours-prep
 
+[![trigger evals](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fstartx-founders%2Fclaude-skills%2Feval-results%2Fbadges%2Fstartx-office-hours-prep.json)](https://github.com/startx-founders/claude-skills/blob/eval-results/docs/skill-health.md)
+
 Prepares a StartX founder for a mentor session (office hours, a mentor 1:1, or a Lead Mentor 1:1). Runs the StartX forcing questions, routes by session type, company stage, and BoA cycle phase, and helps you build a prep doc in StartX's challenge format plus a mentor-note outline you write your message from. Helps sharpen the founder's thinking; it does not decide for the founder or invent evidence.
 
 ## The StartX BoA AI Skills family
