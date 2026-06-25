@@ -13,6 +13,11 @@ Current and alumni StartX founders. We verify membership socially, not via email
 
 We'll raise the bar over time. For now, getting more StartX founders to share working tools matters more than polish.
 
+> **Coming soon — trigger evals.** A future change will let you ship an optional
+> `evals.json` next to your `SKILL.md` (utterances that should and should not
+> invoke your skill) so CI can track how reliably your `description` triggers.
+> It is not wired up yet; see `docs/CI-ARCHITECTURE.md` for the plan.
+
 ## Two ways to contribute a skill
 
 ### Option A — Point us at your own repo (zero friction)
