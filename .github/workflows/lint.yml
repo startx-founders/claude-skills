@@ -143,3 +143,11 @@ jobs:
           else:
               print(f"PR scope: {sorted(authors) or 'no author dirs touched'}")
           PY
+
+  skill-content-lint:
+    name: Validate skill content
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run content lint
+        run: python3 .github/scripts/validate_skills.py
